@@ -443,7 +443,18 @@
 
     const desaEstat = () => { desa('cias-test', estat); desa('cias-test-ronda', numRonda); };
     const situacio = (q) => (estat[q.id] && estat[q.id].e) || 'nova';
-    const delBloc = () => bloc === 'tots' ? banc : banc.filter(q => String(q.b) === bloc);
+    const EXAMEN = window.TEMES_EXAMEN || [];
+    const esExamen = (q) => EXAMEN.includes(q.t);
+    const delBloc = () => bloc === 'tots' ? banc
+      : bloc === 'examen' ? banc.filter(esExamen)
+      : banc.filter(q => String(q.b) === bloc);
+    const nomDelBloc = () => bloc === 'tots' ? 'tot el temari' : bloc === 'examen' ? 'els temes d\'examen' : window.BLOCS[bloc];
+    // «de tot el temari», «dels temes d'examen», «d'Oftalmologia», «de Vascular»
+    const deBloc = () => {
+      const nom = nomDelBloc();
+      if (nom.startsWith('els ')) return 'dels ' + nom.slice(4);
+      return /^[aeiouàèéíòóú]/i.test(nom) ? 'd\'' + nom : 'de ' + nom;
+    };
 
     function infoTema(id) {
       const h3 = $('#' + id + ' h3');
@@ -456,7 +467,7 @@
     /* Fragment literal dels apunts on surt la resposta */
     function cita(q) {
       const tema = document.getElementById(q.t);
-      if (!tema) return '';
+      if (!tema || !q.k) return '';
       const clau = norm(q.k);
       const cands = $$('td, th, li, p, .nota, .tap, .abcde > div', tema)
         .filter(el => !el.closest('.tema-peu, figure, h3, thead') && norm(el.textContent).includes(clau));
@@ -494,13 +505,14 @@
         : pct >= 80 ? ['a-prop', 'Molt a prop', `Et queden ${falten} preguntes. Prioritza les de repàs: són les que encara falles.`]
         : pct >= 50 ? ['meitat', 'Més de la meitat', `Ja domines ${dom} de ${total}. Continua ronda a ronda fins a cobrir tots els temes.`]
         : dom > 0 ? ['cami', 'En camí', `Domines ${dom} de ${total} preguntes. Cada ronda avança pel temari en l'ordre dels apunts.`]
-        : ['inici', 'Comença pel principi', `${total} preguntes que cobreixen els 37 temes. Quan les dominis totes, hauràs repassat tot el temari.`];
+        : ['inici', 'Comença pel principi', `${total} preguntes que cobreixen els 37 temes. Quan les dominis totes, hauràs repassat tot el temari. Els temes d'examen tenen un filtre propi.`];
 
-      const files = Object.entries(window.BLOCS).map(([b, nom]) => {
-        const qs = banc.filter(q => String(q.b) === b);
+      const grups = [...Object.entries(window.BLOCS), ['examen', 'Temes d\'examen']];
+      const files = grups.map(([b, nom]) => {
+        const qs = b === 'examen' ? banc.filter(esExamen) : banc.filter(q => String(q.b) === b);
         const d = qs.filter(q => situacio(q) === 'dom').length;
         const r = qs.filter(q => situacio(q) === 'repas').length;
-        return `<li><span class="tb-nom">${nom}</span>
+        return `<li${b === 'examen' ? ' class="tb-examen"' : ''}><span class="tb-nom">${nom}</span>
           <span class="ts-barra" role="img" aria-label="${d} dominades i ${r} per repassar de ${qs.length}">
             <i class="d" style="width:${d / qs.length * 100}%"></i><i class="r" style="width:${r / qs.length * 100}%"></i>
           </span><span class="tb-n">${d}/${qs.length}</span></li>`;
@@ -531,13 +543,13 @@
       const qs = delBloc();
       const pendents = qs.filter(q => situacio(q) !== 'dom');
       const doms = qs.length - pendents.length;
-      const nomBloc = bloc === 'tots' ? 'tot el temari' : window.BLOCS[bloc];
+      const nomBloc = nomDelBloc();
       let html;
       if (pendents.length) {
         const rep = pendents.filter(q => situacio(q) === 'repas').length;
         const n = Math.min(RONDA, pendents.length);
         html = `<h2>Ronda ${numRonda + 1}</h2>
-          <p>${n} preguntes de ${esc(nomBloc)}. ${rep ? `Primer ${Math.min(rep, MAX_REPAS)} de les ${rep} que tens per repassar; després, ` : 'Surten '}les noves en l'ordre dels apunts.</p>
+          <p>${n} preguntes ${esc(deBloc())}. ${rep ? `Primer ${Math.min(rep, MAX_REPAS)} de les ${rep} que tens per repassar; després, ` : 'Surten '}les noves en l'ordre dels apunts.</p>
           <div class="tg-botons"><button type="button" class="boto boto-pri" data-accio="ronda">Comença la ronda</button>
           ${doms >= RONDA ? `<button type="button" class="boto boto-sec" data-accio="simulacre">Simulacre amb les dominades</button>` : ''}</div>`;
       } else {
@@ -599,7 +611,8 @@
           <div class="barra-prog"><i style="width:${i / llista.length * 100}%"></i></div>
           <span>${encerts} encerts</span></div>
         <div class="ts-preg">
-          <div class="ts-preg-cap"><small>${window.BLOCS[q.b]} · ${esc(infoTema(q.t))}</small><span class="ts-etiq e-${etiq[0]}">${etiq[1]}</span></div>
+          <div class="ts-preg-cap"><small>${window.BLOCS[q.b]} · ${esc(infoTema(q.t))}</small>
+            <span class="ts-etiqs">${esExamen(q) ? '<span class="ts-etiq e-examen">Tema d\'examen</span>' : ''}<span class="ts-etiq e-${etiq[0]}">${etiq[1]}</span></span></div>
           <h2></h2>
           <div class="ts-ops"></div>
           <div class="ts-resultat"></div>
@@ -668,7 +681,8 @@
             <p class="ts-repas-tit">Resposta correcta</p>
             <p class="ts-correcta"></p>
             <p class="ts-exp-text"></p>
-            ${fragment ? `<div class="ts-cita"><p class="ts-cita-font">Als apunts · ${esc(infoTema(q.t))}</p>${fragment}</div>` : ''}
+            ${fragment ? `<div class="ts-cita"><p class="ts-cita-font">Als apunts · ${esc(infoTema(q.t))}</p>${fragment}</div>`
+              : !q.k ? `<div class="ts-cita ts-cita-ampl"><p class="ts-cita-font">Apunts complets · ${esc(infoTema(q.t))}</p><p>Aquest detall no surt a la síntesi de la web: ve dels apunts complets de l'assignatura.</p></div>` : ''}
             <p class="ts-repas-peu"><a class="ts-obre" href="#${q.t}">Obre el tema als apunts</a><span class="ts-estat"></span></p>
           </div>`;
         $('.ts-correcta', res).textContent = correcta;
@@ -712,7 +726,17 @@
     function inicia() {
       if (iniciat) return;
       iniciat = true;
-      creaXips($('#ts-blocs'), 'Tot el temari', (k) => { bloc = k; pintaInici(); });
+      const xips = $('#ts-blocs');
+      creaXips(xips, 'Tot el temari', (k) => { bloc = k; pintaInici(); });
+      // Filtre dels temes que entren a l'examen (grups sanguinis, anticoagulants i INR, hemofílies)
+      const xExamen = Object.assign(document.createElement('button'), { type: 'button', className: 'xip xip-examen', textContent: 'Temes d\'examen' });
+      xExamen.setAttribute('aria-pressed', 'false');
+      xExamen.addEventListener('click', () => {
+        $$('.xip', xips).forEach(x => x.setAttribute('aria-pressed', String(x === xExamen)));
+        bloc = 'examen';
+        pintaInici();
+      });
+      xips.insertBefore(xExamen, xips.children[1]);
       pintaPanell();
       pintaInici();
     }

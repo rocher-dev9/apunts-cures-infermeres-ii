@@ -611,6 +611,13 @@ body[data-filtre] .tema { padding: 22px 0 10px; }
 .ts-etiq.e-repas { background: var(--clau-bg); border-color: var(--clau); color: var(--clau-ink); }
 .ts-etiq.e-torna { background: var(--alerta-bg); border-color: var(--alerta); color: var(--alerta); }
 .ts-etiq.e-dom { background: var(--teal-soft); border-color: var(--teal); color: var(--teal-ink); }
+.ts-etiq.e-examen { background: var(--clau); border-color: var(--clau); color: #3d2f00; }
+.ts-etiqs { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.xip-examen { border-color: var(--clau); }
+.xip-examen[aria-pressed="false"] { background: var(--clau-bg); color: var(--clau-ink); }
+.ts-blocs-prog .tb-examen { padding-top: 6px; border-top: 1px dashed var(--line-strong); }
+.ts-blocs-prog .tb-examen .tb-nom { color: var(--clau-ink); }
+.ts-cita-ampl p:last-child { margin: 0; color: var(--ink-soft); font-size: .92rem; }
 .ts-exp.ok { background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
 .ts-exp .ts-estat { display: block; margin-top: 6px; font-size: .9rem; font-weight: 700; color: var(--ok); }
 
