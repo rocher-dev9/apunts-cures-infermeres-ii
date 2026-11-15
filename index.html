@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cures Infermeres II · Apunts interactius</title>
+<meta name="description" content="Apunts d'estudi sintetitzats de Cures Infermeres en Alteracions de la Salut II, amb targetes, test i eines interactives.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estils.css">
+<script>
+  // Tema abans de pintar, per evitar el parpelleig
+  try {
+    const t = localStorage.getItem('cias-tema');
+    if (t) document.documentElement.dataset.tema = t;
+  } catch (e) {}
+</script>
+</head>
+<body>
+<a class="salt" href="#contingut">Salta al contingut</a>
+
+<header class="barra">
+  <a class="marca" href="#apunts" aria-label="Inici dels apunts">
+    <span class="marca-creu" aria-hidden="true"></span>
+    <span>Cures Infermeres <b>II</b></span>
+  </a>
+  <nav class="modes" aria-label="Modes d'estudi">
+    <a href="#apunts" data-vista="apunts">Apunts</a>
+    <a href="#targetes" data-vista="targetes">Targetes</a>
+    <a href="#test" data-vista="test">Test</a>
+    <a href="#eines" data-vista="eines">Eines</a>
+  </nav>
+  <div class="barra-accions">
+    <label class="cerca">
+      <span class="sr">Cerca als apunts</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+      <input id="cerca" type="search" placeholder="Cerca: INR, glaucoma, TRALI…" autocomplete="off">
+      <kbd>/</kbd>
+    </label>
+    <button class="boto-tema" id="boto-tema" type="button" aria-label="Canvia entre tema clar i fosc">
+      <svg class="ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+      <svg class="ico-lluna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contingut">
+
+<!-- ============ APUNTS ============ -->
+<section class="vista" id="v-apunts" data-vista="apunts">
+
+  <div class="portada">
+    <div class="portada-text">
+      <h1>Cures infermeres en alteracions de la salut II</h1>
+      <p class="portada-sub">Apunts d'estudi sintetitzats per a l'examen. Sis blocs, un annex d'errors i el que cal recordar marcat amb fluorescent.</p>
+    </div>
+    <div class="llegenda" role="group" aria-label="Filtra per tipus de requadre">
+      <p class="llegenda-tit">Repàs ràpid: mostra només</p>
+      <button type="button" class="filtre f-clau" data-filtre="clau" aria-pressed="false"><span>Claus d'examen</span><i></i></button>
+      <button type="button" class="filtre f-alerta" data-filtre="alerta" aria-pressed="false"><span>Alertes</span><i></i></button>
+      <button type="button" class="filtre f-mnemo" data-filtre="mnemo" aria-pressed="false"><span>Mnemotècnies</span><i></i></button>
+      <button type="button" class="filtre f-revisa" data-filtre="revisa" aria-pressed="false"><span>Errors dels apunts</span><i></i></button>
+    </div>
+  </div>
+
+  <div class="apunts">
+    <aside class="index" aria-label="Índex">
+      <div class="index-cap">
+        <p>Progrés</p>
+        <p class="index-total"><b id="prog-n">0</b> de <span id="prog-t">0</span> temes repassats</p>
+        <div class="barra-prog"><i id="prog-barra"></i></div>
+      </div>
+      <ol class="index-blocs" id="index-blocs"><!-- generat amb JS --></ol>
+      <button type="button" class="index-reset" id="reset-prog">Esborra el progrés</button>
+    </aside>
+
+    <div class="text" id="text">
+      <p class="sense-resultats" id="sense-resultats" hidden>Cap tema conté «<b></b>». Prova amb una altra paraula o una abreviatura (TVP, PIO, HBPM…).</p>
+
+<!-- ====== BLOC 1 ====== -->
+<section class="bloc" id="b1" data-bloc="1" data-nom="Oftalmologia">
+  <h2><span class="bloc-n">1</span> Oftalmologia</h2>
+
+  <article class="tema" id="s1-1">
+    <h3><span>1.1</span> Anatomia i fisiologia</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Múscul oculomotor</th><th>Moviment</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Recte superior / inferior</th><td>Eleva / baixa la mirada</td></tr>
+        <tr><th scope="row">Recte intern / lateral</th><td>Adducció (cap al nas) / abducció</td></tr>
+        <tr><th scope="row">Oblic superior</th><td>Cap al nas i avall · el més llarg</td></tr>
+        <tr><th scope="row">Oblic inferior</th><td>Cap a la templa i amunt · el més curt</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Làgrimes: 98% aigua; glàndula lacrimal → conductes → cavitat nasal.</li>
+      <li>Visió: iris → cristal·lí → retina → nervi òptic (II parell) → tàlem → lòbul occipital.</li>
+      <li>Cons (màcula): color i detall, visió diürna. Bastons (perifèria): moviment, visió en penombra.</li>
+      <li>Fòvea (centre de la màcula) = agudesa visual. Miopia: borrós de lluny; hipermetropia: borrós de prop.</li>
+    </ul>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Humor aquós</th><th>Humor vitri</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">On i què</th><td>Cambra anterior i posterior; líquid</td><td>Cavitat posterior; gel, ~80% del volum</td></tr>
+        <tr><th scope="row">Funció</th><td>Nodreix còrnia i cristal·lí (avasculars); manté la PIO (drenatge: canal de Schlemm)</td><td>Suport; manté la retina adherida</td></tr>
+        <tr><th scope="row">Es regenera?</th><td>Sí</td><td>No</td></tr>
+        <tr><th scope="row">Patologia</th><td>Mal drenatge → ↑PIO → glaucoma</td><td>Despreniment del vitri → despreniment de retina (urgència)</td></tr>
+      </tbody>
+    </table></div>
+    <figure><button type="button" class="fig-obre"><img src="img/fig1.jpg" alt="Esquema de l'ull: cos ciliar, iris, pupil·la, còrnia, cristal·lí, retina, fòvea, nervi òptic i cambres oculars." loading="lazy" width="1120" height="296"></button>
+      <figcaption>Figura 1. Anatomia de l'ull i cambres oculars (apunts originals).</figcaption></figure>
+  </article>
+
+  <article class="tema" id="s1-2">
+    <h3><span>1.2</span> Ull vermell i conjuntivitis</h3>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>Ull vermell sense signes d'alarma: sense pèrdua de visió, sense dolor i sense canvis pupil·lars. És el motiu de consulta oftalmològic més freqüent. La conjuntivitis és la causa més freqüent.</p></div>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Bacteriana</th><th>Hiperaguda</th><th>Vírica</th><th>Al·lèrgica</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Agent</th><td>S. aureus, Streptococcus</td><td>Neisseria gonorrhoeae</td><td>Adenovirus</td><td>Al·lergogen</td></tr>
+        <tr><th scope="row">Secreció</th><td>Purulenta; ulls enganxats</td><td>Purulenta copiosa</td><td>Aquosa</td><td>Serosa</td></tr>
+        <tr><th scope="row">Símptoma guia</th><td>Cos estrany</td><td>Dolor, quemosi, ↓ visió</td><td>Fotofòbia; uni → bilateral (2-3 dies)</td><td>Prurit intens, bilateral</td></tr>
+        <tr><th scope="row">Adenopatia preauricular</th><td>No</td><td>Sí</td><td>Sí</td><td>No</td></tr>
+        <tr><th scope="row">Clau</th><td>Antibiòtic tòpic</td><td>Urgència: risc de perforació corneal</td><td>Dura 2-4 setmanes</td><td>Papil·les; episòdica, estacional o perenne</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>Bacteriana = pus · Vírica = aigua (llàgrima) · Al·lèrgica = Alt prurit.</p></div>
+  </article>
+
+  <article class="tema" id="s1-3">
+    <h3><span>1.3</span> Altres causes d'ull vermell</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Quadre</th><th>Clínica clau</th><th>Actuació</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Herpes zòster oftàlmic</th><td>Vesícules unilaterals en dermatoma; signe de Hutchinson (punta del nas) = ~50% d'afectació ocular</td><td>Urgència; antivirals</td></tr>
+        <tr><th scope="row">Hiposfagma</th><td>Taca vermella ben delimitada, indolora, sense secreció; HTA, tos, esforç</td><td>Res (es reabsorbeix). Si es repeteix: descartar HTA o coagulopatia</td></tr>
+        <tr><th scope="row">Queratitis</th><td>Dolor, fotofòbia, ↓ visió; lesions dendrítiques amb fluoresceïna (herpes); lents de contacte</td><td>Antibiòtic urgent; corticoides contraindicats</td></tr>
+        <tr><th scope="row">Iritis (uveïtis anterior)</th><td>Dolor profund + fotofòbia + injecció ciliar; miosi; HLA-B27</td><td>Corticoide tòpic + ciclopègic; risc de sinèquies</td></tr>
+        <tr><th scope="row">Ull sec</th><td>Bilateral, sensació d'arena, visió conservada; Sjögren</td><td>Llàgrimes artificials</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s1-4">
+    <h3><span>1.4</span> Glaucoma i cataractes</h3>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>PIO normal: 10-21 mmHg. Hipertensió ocular no és sinònim de glaucoma.</p></div>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Glaucoma crònic (angle obert)</th><th>Glaucoma agut (angle tancat)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Freqüència</th><td>El més comú</td><td>Menys freqüent</td></tr>
+        <tr><th scope="row">Clínica</th><td>Silenciós; pèrdua de visió perifèrica (túnel)</td><td>Dolor sever, halos, midriasi arreactiva, ull dur, vòmits</td></tr>
+        <tr><th scope="row">Gravetat</th><td>Dany irreversible del nervi òptic</td><td>Emergència</td></tr>
+        <tr><th scope="row">Diagnòstic</th><td>Tonometria, oftalmoscòpia, campimetria</td><td></td></tr>
+        <tr><th scope="row">Tractament</th><td>Col·liris hipotensors; trabeculectomia, làser</td><td></td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Cataractes:</strong> pèrdua de transparència del cristal·lí (envelliment, diabetis, corticoides). Visió borrosa progressiva, enlluernament, millor visió en dies nuvolosos. Tractament: facoemulsificació + lent intraocular (CMA, anestèsia local + sedació). Postoperatori: protector rígid 24-48 h i de nit, no fer esforços ni ajupir-se, antibiòtic + corticoide tòpic 1 mes en pauta descendent.</p>
+  </article>
+
+  <article class="tema" id="s1-5">
+    <h3><span>1.5</span> Parpelles i vies lacrimals</h3>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Ordèol</th><th>Calazi</th><th>Blefaritis</th><th>Dacriocistitis</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Què és</th><td>Infecció aguda de glàndula palpebral</td><td>Inflamació crònica de la glàndula de Meibomi</td><td>Inflamació crònica de les vores</td><td>Infecció del sac lacrimal per obstrucció</td></tr>
+        <tr><th scope="row">Clau</th><td>Molt dolorós, S. aureus; mai esprémer</td><td>Indolor, no infecciós</td><td>Escates; factor de risc d'ordèols</td><td>Nadons: 90% es resol sola</td></tr>
+        <tr><th scope="row">Tractament</th><td>Calor, massatge, antibiòtic tòpic</td><td>Calor humit; cirurgia si persisteix</td><td>Higiene + compreses; eritromicina tòpica</td><td>Calor, antibiòtic; dacriocistorinostomia</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s1-6">
+    <h3><span>1.6</span> Traumatismes i cremades</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Situació</th><th>Actuació</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hifema</th><td>Repòs en semi-Fowler; risc de glaucoma</td></tr>
+        <tr><th scope="row">Pupil·la en gota (ruptura del globus)</th><td>Cap pressió; escut rígid</td></tr>
+        <tr><th scope="row">Cos estrany clavat</th><td>Mai retirar-lo; estabilitzar i protegir</td></tr>
+        <tr><th scope="row">Cremada química</th><td>Irrigar immediatament 15-30 min (SF o aigua)</td></tr>
+        <tr><th scope="row">Erosió corneal</th><td>Ciclopègics + AINE tòpics; evitar aminoglucòsids i corticoides; derivar si no millora en 48 h; no tapar si és per material biològic o ungles</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota alerta"><p class="nota-tit">Alerta</p>
+      <p>Àlcalis (lleixiu, ciment, sosa) = necrosi per liqüefacció, penetren i són els més greus. Àcids = necrosi per coagulació (barrera).</p></div>
+    <p><strong>Exploració:</strong> agudesa visual (cada ull, placa estenopeica), motilitat, reflexos (miosi arreactiva → erosió, queratitis, iritis; midriasi arreactiva → glaucoma agut), tríade del segment anterior (blefarospasme + llagrimeig + fotofòbia). <strong>Cos estrany:</strong> anestèsic, eversió palpebral, irrigació, extracció, fluoresceïna 2% amb llum blava (zona lesionada verda o groga).</p>
+  </article>
+
+  <article class="tema" id="s1-7">
+    <h3><span>1.7</span> Proves i farmacologia oftàlmica</h3>
+    <ul>
+      <li>Làmpada de fenedura (la més usada, segment anterior) · fons d'ull (segment posterior) · tonometria (PIO) · campimetria (camp visual) · angiografia amb fluoresceïna (retina; sobretot diabetis).</li>
+    </ul>
+    <div class="taps" aria-label="Color del tap dels col·liris">
+      <div class="tap"><i style="--tap:#f2c230"></i><b>Groc</b><span>Anestèsics</span></div>
+      <div class="tap"><i style="--tap:#d63c3c"></i><b>Vermell</b><span>Midriàtics</span></div>
+      <div class="tap"><i style="--tap:#2f9e64"></i><b>Verd</b><span>Miòtics</span></div>
+      <div class="tap"><i style="--tap:#f4f4f2"></i><b>Blanc</b><span>Altres (antibiòtics, llàgrimes)</span></div>
+    </div>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>1 gota per ull al sac conjuntival inferior · caducitat 1 mes un cop obert · 5 min entre col·liris · pomada l'última · ull infectat: començar per l'ull sa · oclusió puntual 30-60 s (betablocadors, corticoides) · retirar lents de contacte · mai tocar la punta.</p></div>
+    <p><strong>Pròtesi ocular:</strong> estètica, no restaura la visió. Neteja diària sense treure-la (gasa amb SF, de l'angle intern a l'extern); mai alcohol ni bullir-la; cavitat rosada = sana; revisió cada 6-12 mesos.</p>
+  </article>
+</section>
+
+<!-- ====== BLOC 2 ====== -->
+<section class="bloc" id="b2" data-bloc="2" data-nom="Dermatologia">
+  <h2><span class="bloc-n">2</span> Dermatologia</h2>
+
+  <article class="tema" id="s2-1">
+    <h3><span>2.1</span> Valoració</h3>
+    <p>Anamnesi + inspecció + palpació (amb guants). Anamnesi sistemàtica: cronologia, localització i extensió, símptomes (EVA), evolució, desencadenants, tractaments previs, antecedents (tríada atòpica: asma, rinitis, dermatitis), higiene i impacte psicosocial (l'alteració del son és criteri de gravetat).</p>
+    <div class="taula"><table>
+      <thead><tr><th>Cronologia</th><th>Durada</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Aguda</th><td>&lt; 6 setmanes</td><td>Urticària, reaccions a fàrmacs, NET (risc de xoc)</td></tr>
+        <tr><th scope="row">Subaguda</th><td>6-12 setmanes</td><td>Sarna, ampul·loses, acne</td></tr>
+        <tr><th scope="row">Crònica</th><td>&gt; 12 setmanes</td><td>Èczema, psoriasi</td></tr>
+        <tr><th scope="row">Intermitent</th><td>Brots</td><td>Herpes, urticària</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Inspecció: color, mida (1 ml = 1 cm³), profunditat, forma, contingut, pell perilesional i agrupament (lineal, anular, herpetiforme, reticular).</li>
+      <li>Mètode de Berg: apòsit transparent + SF fins a enrasar; volum = ml instil·lats.</li>
+      <li>Profunditat: superficial (epidermis) · dèrmica · subcutània · profunda (fàscia, múscul, os).</li>
+      <li>Palpació: temperatura amb el dors de la mà, textura, signe del plec, consistència (fluctuant = líquid), mobilitat, edema, vitropressió.</li>
+      <li>Els noms de les lesions descriuen, no diagnostiquen: observar → palpar → descriure → classificar → interpretar.</li>
+    </ul>
+    <figure><button type="button" class="fig-obre"><img src="img/fig2.jpg" alt="Mètode de Berg per mesurar el volum d'una ferida i nivells de profunditat de la pell." loading="lazy" width="1400" height="689"></button>
+      <figcaption>Figura 2. Mètode de Berg i nivells de profunditat (apunts originals).</figcaption></figure>
+  </article>
+
+  <article class="tema" id="s2-2">
+    <h3><span>2.2</span> Regla ABCDE i regla de l'ànec lleig</h3>
+    <div class="abcde">
+      <div><b>A</b><span>Asimetria</span><p>Meitats diferents</p></div>
+      <div><b>B</b><span>Bores</span><p>Irregulars, dentades, borroses</p></div>
+      <div><b>C</b><span>Color</span><p>Diversos colors</p></div>
+      <div><b>D</b><span>Diàmetre</span><p>&gt; 6 mm</p></div>
+      <div class="abcde-e"><b>E</b><span>Evolució</span><p>Canvis de mida, forma o color, sagnat · criteri més important</p></div>
+    </div>
+    <p><strong>Ànec lleig:</strong> en pacients amb molts nevus, la piga diferent de la resta és sospitosa (complementa l'ABCDE).</p>
+    <figure><button type="button" class="fig-obre"><img src="img/fig3.jpg" alt="Regla de l'ànec lleig: entre diversos nevus semblants, el diferent és sospitós." loading="lazy" width="842" height="780"></button>
+      <figcaption>Figura 3. Regla de l'ànec lleig (apunts originals).</figcaption></figure>
+  </article>
+
+  <article class="tema" id="s2-3">
+    <h3><span>2.3</span> Lesions primàries i secundàries</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Primàries sòlides</th><th>Primàries líquides</th><th>Secundàries</th></tr></thead>
+      <tbody>
+        <tr><td><b>Màcula:</b> canvi de color sense relleu</td><td><b>Vesícula:</b> líquid clar, &lt; 0,5-1 cm</td><td><b>Escata:</b> estrat corni que es desprèn (psoriasi)</td></tr>
+        <tr><td><b>Pàpula:</b> elevada, &lt; 1 cm</td><td><b>Ampolla:</b> vesícula gran</td><td><b>Crosta:</b> sèrum (groc), pus (verd), sang (marró)</td></tr>
+        <tr><td><b>Placa:</b> ampla i plana</td><td><b>Pústula:</b> pus</td><td><b>Erosió:</b> només epidermis</td></tr>
+        <tr><td><b>Favassa:</b> edema dèrmic evanescent</td><td><b>Quist:</b> càpsula pròpia</td><td><b>Úlcera:</b> epidermis + dermis o més</td></tr>
+        <tr><td><b>Nòdul:</b> profund, palpable</td><td><b>Abscés:</b> pus profund, fluctuant</td><td><b>Cicatriu:</b> atròfica, hipertròfica (queloide), retràctil</td></tr>
+        <tr><td><b>Tumor:</b> massa que creix</td><td><b>Fol·liculitis:</b> fol·licle pilós</td><td></td></tr>
+      </tbody>
+    </table></div>
+    <div class="figs-2">
+      <figure><button type="button" class="fig-obre"><img src="img/fig4.jpg" alt="Il·lustracions de lesions primàries de la pell: màcula, pàpula, placa, nòdul, vesícula, ampolla, pústula i altres." loading="lazy" width="1276" height="1088"></button>
+        <figcaption>Figura 4. Lesions primàries (apunts originals).</figcaption></figure>
+      <figure><button type="button" class="fig-obre"><img src="img/fig5.jpg" alt="Il·lustracions de lesions secundàries de la pell: escata, crosta, erosió, úlcera i cicatriu." loading="lazy" width="1134" height="1020"></button>
+        <figcaption>Figura 5. Lesions secundàries (apunts originals).</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="tema" id="s2-4">
+    <h3><span>2.4</span> Patologies dermatològiques</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Patologia</th><th>Com es reconeix</th><th>Tractament i alerta</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Herpes zòster</th><td>Vesícules agrupades en dermatoma, unilateral; dolor previ</td><td>Antivirals en &lt; 72 h; alerta: cara, ull, immunosupressió; neuràlgia postherpètica</td></tr>
+        <tr><th scope="row">Psoriasi</th><td>Plaques eritematoses amb escata platejada; colzes, genolls, cuir cabellut; no contagiosa</td><td>Emol·lients, corticoides i anàlegs de la vitamina D; alerta: dolor articular</td></tr>
+        <tr><th scope="row">Urticària</th><td>Favasses evanescents i pruriginoses</td><td>Antihistamínics; alerta: angioedema, dificultat respiratòria</td></tr>
+        <tr><th scope="row">Lesió per humitat</th><td>Eritema difús, maceració, no sobre prominència òssia</td><td>Controlar humitat, productes barrera</td></tr>
+        <tr><th scope="row">Candidiasi</th><td>Eritema viu, maceració, lesions satèl·lit; plecs</td><td>Antifúngics (clotrimazol, miconazol, nistatina)</td></tr>
+        <tr><th scope="row">Peu d'atleta</th><td>Descamació interdigital (4t-5è dit), fissures</td><td>Assecar, antifúngics (terbinafina); diabetis</td></tr>
+        <tr><th scope="row">Lesió per pressió</th><td>Eritema no blanquejant sobre prominència òssia</td><td>Alleujar pressió, canvis posturals</td></tr>
+        <tr><th scope="row">Melanoma</th><td>ABCDE positiu, canvi evolutiu</td><td>Derivar (extirpació)</td></tr>
+        <tr><th scope="row">Impètigen</th><td>Vesícules → crostes melicèriques (nas i boca); infants; contagiós</td><td>Mupirocina o àcid fusídic; no compartir tovalloles</td></tr>
+        <tr><th scope="row">Acne</th><td>Comedons, pàpules, pústules; cara i tronc; no contagiós</td><td>Peròxid de benzoïl, retinoides; no manipular</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s2-5">
+    <h3><span>2.5</span> Proves diagnòstiques</h3>
+    <ul>
+      <li>Biòpsia (punch, incisional, excisional) · raspat de vores actives (fongs, sarna) · Tzanck (herpes).</li>
+      <li>Cultiu: sempre abans d'iniciar antibiòtics o antivirals.</li>
+      <li>Prick test i patch test: no mullar ni gratar els pegats durant 48-72 h.</li>
+      <li>Analítica: dermatitis atòpica = eosinofília i ↑IgE; infecció = leucocitosi.</li>
+    </ul>
+  </article>
+</section>
+
+<!-- ====== BLOC 3 ====== -->
+<section class="bloc" id="b3" data-bloc="3" data-nom="Vascular">
+  <h2><span class="bloc-n">3</span> Vascular</h2>
+
+  <article class="tema" id="s3-1">
+    <h3><span>3.1</span> Bases i factors de risc</h3>
+    <p>FR modificables: tabac, HTA, dislipèmia, obesitat, sedentarisme, DM. Artèries: capa mitja gruixuda; venes: mitja prima, amb vàlvules (més com més distal).</p>
+    <ul>
+      <li>Safena interna → femoral (la més llarga) · safena externa → poplítia. Les venes perforants drenen del sistema superficial al profund.</li>
+      <li>Retorn venós: vàlvules + bomba muscular (caminar) + acció del tòrax (inspiració). La gravetat hi va en contra.</li>
+    </ul>
+  </article>
+
+  <article class="tema" id="s3-2">
+    <h3><span>3.2</span> Insuficiència venosa i varius</h3>
+    <p><strong>IVC:</strong> insuficiència valvular → hipertensió venosa → pesadesa, edema, dolor que millora elevant les cames. FR: &gt; 40 anys, dona, herència, grup A, obesitat, immobilitat.</p>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Varius primàries</th><th>Varius secundàries</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Causa</th><td>Herència, embaràs</td><td>TVP o traumatisme previ</td></tr>
+        <tr><th scope="row">Qui</th><td>Més en dones</td><td>Igual en tots dos sexes</td></tr>
+        <tr><th scope="row">Lateralitat</th><td>Bilaterals</td><td>Unilaterals</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Exploració primer en bipedestació. Diagnòstic: Doppler i flebografia (la més informativa, invasiva).</li>
+      <li>Tractament: prevenció (caminar, nedar, elevar cames, peus del llit a 15º, mitges), venotònics, escleròsi i cirurgia (el més eficaç).</li>
+      <li>Safenectomia (CMA): consentiment ≥ 24 h abans; rasurat del peu al melic; dejuni ≥ 6 h; anestèsia intradural; deambulació a les 3 h; micció &gt; 200 cc; treure l'embenat a les 24 h; mitja de compressió; HBPM 10 dies.</li>
+      <li>Varicorràgia: elevar l'extremitat i comprimir 15-20 min. Varicoflebitis: cordó dur i dolorós.</li>
+    </ul>
+  </article>
+
+  <article class="tema" id="s3-3">
+    <h3><span>3.3</span> Trombosi venosa profunda (TVP)</h3>
+    <p>Oclusió de venes profundes (de distal a proximal). Dolor al panxell, edema amb fòvea, impotència funcional, febre. Complicació més greu: embolisme pulmonar (TEP). Risc ↑ amb cirurgia llarga i anestèsia general.</p>
+    <div class="taula"><table>
+      <thead><tr><th>Maniobra</th><th>Com es fa</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Homans</th><td>Flexió dorsal forçada del peu → dolor al panxell</td></tr>
+        <tr><th scope="row">Denecke-Payr</th><td>Pressió plantar davant del taló</td></tr>
+        <tr><th scope="row">Payr</th><td>Compressió del trajecte tibial posterior</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Prevenció:</strong> deambulació precoç, elevar EEII, compressió pneumàtica, HBPM. <strong>Tractament:</strong> heparina/HBPM, trombolítics. <strong>Complicació tardana:</strong> síndrome postflebític.</p>
+  </article>
+
+  <article class="tema" id="s3-4">
+    <h3><span>3.4</span> Patologia arterial i isquèmia</h3>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Dolor arterial</th><th>Dolor venós</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Tipus</th><td>Brusc, localitzat, intens</td><td>Pesadesa difusa</td></tr>
+        <tr><th scope="row">Millora</th><td>Repòs i cames avall</td><td>Elevant les cames</td></tr>
+        <tr><th scope="row">Empitjora</th><td>Exercici, cames elevades</td><td>Bipedestació</td></tr>
+      </tbody>
+    </table></div>
+    <ol class="fontaine" aria-label="Graus de Fontaine">
+      <li><b>I</b><span>Asimptomàtic</span></li>
+      <li><b>IIa / IIb</b><span>Claudicació intermitent &gt; 150 m / &lt; 150 m</span></li>
+      <li><b>III</b><span>Dolor en repòs</span></li>
+      <li><b>IV</b><span>Necrosi</span></li>
+    </ol>
+    <ul>
+      <li>Isquèmia aguda (èmbol): extremitat freda, pàl·lida, sense pols, dolor, parestèsies, paràlisi → embolectomia. Crònica (ateroma): Fontaine; graus III-IV → cirurgia.</li>
+      <li>Tromboangiïtis obliterant: lligada al tabac. Raynaud: EESS, dones joves, fred. Aneurisma: dilatació per debilitat de la capa mitja; risc de ruptura.</li>
+      <li>Ompliment capil·lar alterat si ≥ 2 s. Polsos: popliti, pedi, tibial posterior.</li>
+    </ul>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>Les 6 P de la isquèmia aguda: Pain (dolor), Pal·lidesa, Pulseless (sense pols), Parestèsies, Paràlisi, Poiquilotèrmia (fredor).</p></div>
+  </article>
+
+  <article class="tema" id="s3-5">
+    <h3><span>3.5</span> Proves vasculars</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Índex turmell-braç (ITB = TAS turmell / TAS braquial)</th><th>Interpretació (apunts)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">&gt; 1</th><td>Normal</td></tr>
+        <tr><th scope="row">0,8-1</th><td>Obstrucció lleu</td></tr>
+        <tr><th scope="row">0,4-0,8</th><td>Obstrucció greu</td></tr>
+        <tr><th scope="row">&lt; 0,4</th><td>Obstrucció molt greu</td></tr>
+      </tbody>
+    </table></div>
+    <p class="enllac-eina"><a href="#eines" data-eina="itb">Calcula un ITB amb la calculadora</a></p>
+    <div class="nota revisa"><p class="nota-tit">Revisa: error als apunts originals</p>
+      <p>Als apunts la fórmula de l'ITB apareix invertida i diuen que una TA més alta a les cames indica obstrucció: és al revés, l'obstrucció redueix la TA del turmell. Les guies solen considerar normal un ITB de ~0,9-1,4.</p></div>
+    <ul>
+      <li>Ecodoppler: vermell = flux que s'acosta; blau = flux que s'allunya. Claudicometria: tapís a 2-3 km/h, pendent 10-12%.</li>
+      <li>Arteriografia: dejuni 6-8 h, preguntar al·lèrgies i ACO; després, compressió, repòs i polsos distals; risc de nefrotoxicitat.</li>
+      <li>Limfografia: contrast blau d'Evans; extremitat elevada.</li>
+    </ul>
+  </article>
+
+  <article class="tema" id="s3-6">
+    <h3><span>3.6</span> Lesions relacionades amb la dependència</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Classificació</th><th>Categories</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">LPP (pressió i cisalla)</th><td>I eritema no blanquejant · II pèrdua parcial de dermis · III pèrdua total, greix visible · IV os, tendó o múscul exposats</td></tr>
+        <tr><th scope="row">LESCAH (humitat)</th><td>I eritema sense pèrdua (1A lleu, 1B intens) · II eritema amb pèrdua (2A erosió &lt; 50%, 2B ≥ 50%)</td></tr>
+        <tr><th scope="row">Skin tears (ISTAP)</th><td>1 colgall recol·locable · 2 pèrdua parcial · 3 pèrdua total</td></tr>
+        <tr><th scope="row">Fricció</th><td>Eritema lineal, flictena o ferida per ruptura de la flictena</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+</section>
+
+<!-- ====== BLOC 4 ====== -->
+<section class="bloc" id="b4" data-bloc="4" data-nom="Hematologia">
+  <h2><span class="bloc-n">4</span> Hematologia</h2>
+
+  <article class="tema" id="s4-1">
+    <h3><span>4.1</span> Anèmies</h3>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>La gravetat de l'anèmia depèn sobretot de la velocitat d'instauració. Clínica: astènia, dispnea d'esforç, pal·lidesa, taquicàrdia.</p></div>
+    <div class="taula"><table>
+      <thead><tr><th>Tipus</th><th>Hematies</th><th>Causes i claus</th><th>Tractament</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Ferropènica</th><td>Petits</td><td>La més freqüent; pèrdues, embaràs, poca ingesta. Sideremia, ferritina, transferrina</td><td>Ferro</td></tr>
+        <tr><th scope="row">Macrocítica</th><td>Grans</td><td>Dèficit de fòlic o B12 (B12 → clínica neurològica)</td><td>Fòlic VO, B12 IM</td></tr>
+        <tr><th scope="row">Hemolítica</th><td>Destruïts</td><td>Talassèmia, autoimmune, reacció transfusional; ictericia, orina fosca, esplenomegàlia</td><td></td></tr>
+        <tr><th scope="row">Aplàsica</th><td>Fracàs medul·lar</td><td>Benzè, QT, parvovirus B19; plaquetes &lt; 20.000, neutròfils &lt; 500</td><td>Transfusions, immunosupressors, TMO</td></tr>
+      </tbody>
+    </table></div>
+    <figure><button type="button" class="fig-obre"><img src="img/fig6.jpg" alt="Esquema de les anèmies macrocítiques megaloblàstiques i no megaloblàstiques." loading="lazy" width="1124" height="734"></button>
+      <figcaption>Figura 6. Anèmies macrocítiques megaloblàstiques i no megaloblàstiques (apunts originals).</figcaption></figure>
+    <p><strong>Leucèmies:</strong> proliferació maligna de cèl·lules CD34 (Down, virus, radiacions). Anèmia + infeccions + sagnats + sudoració nocturna. LLA = infants · LLC = adults · LMA = &gt; 60 anys · LMC = anomalia genètica adquirida.</p>
+  </article>
+
+  <article class="tema" id="s4-2">
+    <h3><span>4.2</span> Grups sanguinis i compatibilitat</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Grup</th><th>Antigen</th><th>Anticossos</th><th>Rep hematies de</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">A</th><td>A</td><td>Anti-B</td><td>A, O</td></tr>
+        <tr><th scope="row">B</th><td>B</td><td>Anti-A</td><td>B, O</td></tr>
+        <tr><th scope="row">AB</th><td>A i B</td><td>Cap</td><td>Tots (receptor universal)</td></tr>
+        <tr><th scope="row">O</th><td>Cap</td><td>Anti-A i anti-B</td><td>Només O (donant universal)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>O- = donant universal d'hematies · AB+ = receptor universal · Rh+ té l'antigen D · un Rh- només rep Rh- · urgència sense grup conegut → O-.</p></div>
+    <p class="enllac-eina"><a href="#eines" data-eina="sang">Prova qui pot donar a qui</a></p>
+    <figure><button type="button" class="fig-obre"><img src="img/fig7.jpg" alt="Taula de la prova d'aglutinació amb sèrums anti-A, anti-B, anti-A i anti-B, i anti-Rh davant dels grups A, B, AB, O, Rh+ i Rh-." loading="lazy" width="960" height="596"></button>
+      <figcaption>Figura 7. Prova d'aglutinació: aglutina el sèrum que reconeix l'antigen present (apunts originals).</figcaption></figure>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Incompatibilitat ABO</th><th>Incompatibilitat Rh</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Situació</th><td>Mare O, fetus A, B o AB</td><td>Mare Rh-, fetus Rh+</td></tr>
+        <tr><th scope="row">Quan</th><td>Ja al 1r embaràs</td><td>2n embaràs (després de sensibilització)</td></tr>
+        <tr><th scope="row">Gravetat</th><td>Lleu (ictericia)</td><td>Greu (hidrops, mort fetal)</td></tr>
+        <tr><th scope="row">Freqüència</th><td>Més freqüent</td><td>Menys freqüent, més perillosa</td></tr>
+        <tr><th scope="row">Prevenció</th><td>No n'hi ha</td><td>Immunoglobulina anti-D</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Coombs directe:</strong> anticossos units als hematies (anèmia hemolítica autoimmune, malaltia hemolítica del nounat, reacció transfusional). <strong>Coombs indirecte:</strong> anticossos lliures al sèrum (prova pretransfusional, embarassades Rh-).</p>
+  </article>
+
+  <article class="tema" id="s4-3">
+    <h3><span>4.3</span> Transfusió i hemovigilància</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Component</th><th>Conservació</th><th>Durada</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hematies</th><td>1-6 ºC</td><td>Fins a 42 dies</td></tr>
+        <tr><th scope="row">Plasma fresc congelat</th><td>-30 ºC</td><td>1 any</td></tr>
+        <tr><th scope="row">Plaquetes</th><td>20-24 ºC amb agitació</td><td>5-7 dies</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Identificació del pacient (polsera) i de la bossa, doble verificació, constants abans, durant i després; màxim 4 h per unitat.</li>
+      <li>Reacció: notificar al banc de sang (full PRAT) → Sistema Nacional d'Hemovigilància (AEMPS). Imputabilitat: definida, probable, possible, dubtosa, exclosa.</li>
+    </ul>
+    <div class="taula"><table>
+      <thead><tr><th>Reacció</th><th>Clau</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hemolítica aguda</th><td>Incompatibilitat ABO: febre, dolor lumbar, hipotensió, hemoglobinúria, CID · la més greu</td></tr>
+        <tr><th scope="row">Febril no hemolítica</th><td>Anticossos contra leucòcits del donant · la més freqüent i benigna</td></tr>
+        <tr><th scope="row">Al·lèrgica / anafilaxi</th><td>Urticària (antihistamínic i es pot continuar) / dèficit d'IgA, xoc</td></tr>
+        <tr><th scope="row">TRALI</th><td>Anticossos del donant; edema pulmonar sense HTA; primeres 6 h</td></tr>
+        <tr><th scope="row">TACO</th><td>Excés de volum (gent gran, IC); edema pulmonar amb HTA</td></tr>
+        <tr><th scope="row">EICH posttransfusional</th><td>Immunosuprimits; quasi sempre mortal</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s4-4">
+    <h3><span>4.4</span> Anticoagulants <em class="etiq-examen">examen</em></h3>
+    <div class="taula"><table>
+      <thead><tr><th>Grup</th><th>Fàrmacs</th><th>Control</th><th>Antídot</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">AVK</th><td>Acenocumarol (Sintrom), warfarina</td><td>INR 2-3</td><td>Vitamina K</td></tr>
+        <tr><th scope="row">ACOD</th><td>Rivaroxaban, apixaban, edoxaban, dabigatran</td><td>Funció renal i hepàtica</td><td>Idarucizumab (dabigatran) · andexanet alfa (anti-Xa)</td></tr>
+        <tr><th scope="row">HNF</th><td>Heparina sòdica (EV, SC)</td><td>TTPa</td><td>Protamina</td></tr>
+        <tr><th scope="row">HBPM</th><td>Enoxaparina (SC)</td><td>No rutinari</td><td>Protamina (parcial)</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Indicacions: fibril·lació auricular, TVP, embolisme pulmonar, pròtesis valvulars. Efecte advers principal: hemorràgia.</li>
+      <li>ACOD contraindicats en pròtesis mecàniques. HBPM d'elecció en embaràs i càncer.</li>
+    </ul>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>Sintrom → vitamina K · Heparina → Protamina · DAbigatran → IDArucizumab.</p></div>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>INR normal ≈ 1 · INR terapèutic (AVK) = 2-3. El TP (Quick) normal és 70-100% (11-16 s). L'INR es calcula amb el TP, no amb el TTPa.</p></div>
+    <p class="enllac-eina"><a href="#eines" data-eina="inr">Interpreta un valor d'INR</a></p>
+    <div class="taula"><table>
+      <thead><tr><th>↑ INR (risc d'hemorràgia)</th><th>↓ INR (risc de trombosi)</th></tr></thead>
+      <tbody>
+        <tr><td>Alcohol, febre, hipertiroïdisme, hepatopatia</td><td>Dieta rica en vitamina K, hipotiroïdisme</td></tr>
+        <tr><td>Antibiòtics, antifúngics, antidepressius, amiodarona, estatines</td><td>Anticonvulsius, rifampicina, tiazides</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Extracció: tub blau (citrat) fins a la marca. Coagulòmetre: no netejar amb alcohol ni esprémer el dit.</li>
+      <li>Cures: vigilar sagnats (genives, orina, femta negra), mai injeccions IM, mateixa hora cada dia, mai doble dosi, no automedicar-se, dieta amb vitamina K constant, avisar abans de cirurgia; TCE = sospitar hemorràgia intracranial.</li>
+      <li>NANDA: Risc d'hemorràgia (00206), Risc de lesió (00155).</li>
+    </ul>
+  </article>
+
+  <article class="tema" id="s4-5">
+    <h3><span>4.5</span> Coagulopaties</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Alteració</th><th>Factor</th><th>Clau</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hemofília A</th><td>VIII</td><td>Homes; hemartrosi; TTPa allargat</td></tr>
+        <tr><th scope="row">Hemofília B</th><td>IX</td><td>Igual que l'A</td></tr>
+        <tr><th scope="row">Von Willebrand</th><td>VIII + vWF</td><td>Hemorràgies mucoses</td></tr>
+        <tr><th scope="row">CID</th><td>Consum de plaquetes i factors</td><td>↓ plaquetes, ↑ TP i TTPa, ↓ fibrinogen, ↑ D-dímer; tractar la causa; plaquetes si &lt; 50.000</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>A abans que B, 8 abans que 9: hemofília A = factor VIII; B = factor IX. Tractament segons els apunts: desmopressina (DDAVP).</p></div>
+  </article>
+
+  <article class="tema" id="s4-6">
+    <h3><span>4.6</span> Trasplantament de progenitors hematopoètics (TPH)</h3>
+    <ol class="fases" aria-label="Fases del TPH">
+      <li>Donació</li><li>Condicionament del receptor (QT/RT)</li><li>Infusió</li><li>Aplàsia</li><li>Empelt</li>
+    </ol>
+    <div class="taula"><table>
+      <thead><tr><th>Concepte</th><th>Clau</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Tipus de donant</th><td>Autòleg (el mateix pacient) · singènic (bessó idèntic) · al·logènic emparentat (germà compatible 25%) o no emparentat</td></tr>
+        <tr><th scope="row">Fonts</th><td>Moll d'os (cresta ilíaca) · sang perifèrica (la més usada; G-CSF + afèresi) · cordó umbilical (poques cèl·lules)</td></tr>
+        <tr><th scope="row">Empelt</th><td>Autòleg 12-14 dies · cordó 25-40 dies (el més lent)</td></tr>
+        <tr><th scope="row">Complicacions</th><td>Infecció, hemorràgia, malaltia venooclusiva hepàtica, mucositis, cistitis hemorràgica, EICH (aguda &lt; 100 dies; crònica &gt; 100 dies)</td></tr>
+        <tr><th scope="row">Cures</th><td>Aïllament invers; constants a cada bossa; pes i balanç diaris; sortida de l'aïllament amb neutròfils &gt; 500</td></tr>
+        <tr><th scope="row">Alta</th><td>Res cru, preservatiu, protecció solar, rèptils prohibits; febre 38,5 ºC → hospital</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+</section>
+
+<!-- ====== BLOC 5 ====== -->
+<section class="bloc" id="b5" data-bloc="5" data-nom="Oncologia">
+  <h2><span class="bloc-n">5</span> Oncologia</h2>
+
+  <article class="tema" id="s5-1">
+    <h3><span>5.1</span> Conceptes i prevenció</h3>
+    <ul>
+      <li>Càncer: proliferació de cèl·lules anormals amb capacitat d'envair i fer metàstasi. Sarcomes (teixit connectiu) · carcinomes (epitelial) · leucèmies i limfomes.</li>
+      <li>Carcinogènesi: iniciació → promoció → progressió. Benigne = iniciació + promoció; maligne = les tres.</li>
+      <li>Prevenció primària (evitar factors de risc, vacunes VPH i hepatitis B, lactància) i secundària (cribratge).</li>
+    </ul>
+    <div class="taula"><table>
+      <thead><tr><th>Cribratge a Catalunya (nov. 2026)</th><th>Població</th><th>Prova</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Mama</th><td>Dones 50-69 anys</td><td>Mamografia cada 2 anys</td></tr>
+        <tr><th scope="row">Colorectal</th><td>50-69 anys (ampliació aprovada fins als 74)</td><td>Sang oculta en femta cada 2 anys</td></tr>
+        <tr><th scope="row">Coll uterí</th><td>Dones 25-65 anys</td><td>Citologia (25-29) / prova de VPH (≥ 30)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota revisa"><p class="nota-tit">Revisa: error als apunts originals</p>
+      <p>Els apunts indiquen mamografies «de 45 a 50 anys» i citen CA-125, TC de pulmó i PSA com a cribratges: el programa públic català actual és de 50 a 69 anys i aquestes proves no són cribratges poblacionals.</p></div>
+  </article>
+
+  <article class="tema" id="s5-2">
+    <h3><span>5.2</span> Unitats de Diagnòstic Ràpid (UDR)</h3>
+    <p>Estudi ambulatori de sospita de càncer amb l'objectiu d'iniciar el tractament en &lt; 30 dies. La infermera gestora de casos coordina proves, informa i dona suport emocional.</p>
+    <div class="taula"><table>
+      <thead><tr><th>Càncer</th><th>Símptomes guia per derivar</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Colorectal</th><td>Anèmia ferropènica sense causa, canvi del ritme deposicional &gt; 1 mes, massa, tenesme</td></tr>
+        <tr><th scope="row">Pulmó</th><td>Hemoptisi, tos diferent &gt; 1 mes, Rx sospitosa, pneumònia recurrent</td></tr>
+        <tr><th scope="row">Mama</th><td>Nòdul, secreció pel mugró, retracció, adenopatia axil·lar</td></tr>
+        <tr><th scope="row">Bufeta i pròstata</th><td>Hematúria macroscòpica, PSA &gt; 10, tacte rectal sospitós</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s5-3">
+    <h3><span>5.3</span> Tractaments</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Terme</th><th>Significat</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Neoadjuvant</th><td>Abans de la cirurgia</td></tr>
+        <tr><th scope="row">Adjuvant</th><td>Després de la cirurgia</td></tr>
+        <tr><th scope="row">Concomitant</th><td>QT + RT alhora</td></tr>
+      </tbody>
+    </table></div>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Radioteràpia</th><th>Quimioteràpia</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Tipus</th><td>Local (externa, braquiteràpia)</td><td>Sistèmica (EV principal, oral, intratecal...)</td></tr>
+        <tr><th scope="row">Efecte advers principal</th><td>Epitelitis</td><td>Neutropènia</td></tr>
+        <tr><th scope="row">Altres</th><td>Fatiga, alopècia local, mucositis, diarrea</td><td>Nàusees (ondansetró), mucositis, alopècia, parestèsies</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota alerta"><p class="nota-tit">Alerta</p>
+      <p>Pacient en QT amb febre ≥ 38,5 ºC = neutropènia febril, alt risc d'infecció. Analítica abans de cada sessió.</p></div>
+    <p><strong>Mucositis:</strong> apareix als 7-10 dies; fases (apunts): inflamatòria → ulceració → exsudativa → curació. <strong>Hormonoteràpia:</strong> efectes de menopausa o andropausa sobtada, osteoporosi. <strong>Immunoteràpia:</strong> efectes cutanis i immunomediats, normalment sense alopècia. Herba de Sant Joan ↓ l'eficàcia de la QT; all ↑ el sagnat.</p>
+  </article>
+
+  <article class="tema" id="s5-4">
+    <h3><span>5.4</span> Citostàtics i extravasació</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Tipus</th><th>Efecte</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Vesicants</th><td>Necrosi</td><td>Doxorubicina, dactinomicina</td></tr>
+        <tr><th scope="row">Irritants</th><td>Inflamació i dolor</td><td>Paclitaxel, docetaxel, metotrexat</td></tr>
+        <tr><th scope="row">No agressius</th><td>Sense dany</td><td>Bleomicina</td></tr>
+      </tbody>
+    </table></div>
+    <p class="passos-tit">Davant d'una extravasació, en aquest ordre:</p>
+    <ol class="passos">
+      <li>Aturar la infusió.</li>
+      <li>Aspirar 3-5 ml per la mateixa via.</li>
+      <li>Notificar i administrar l'antídot si n'hi ha.</li>
+      <li>Retirar la via (mai un port-a-cath) i delimitar la zona.</li>
+      <li>Registrar.</li>
+    </ol>
+  </article>
+
+  <article class="tema" id="s5-5">
+    <h3><span>5.5</span> Catèters</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Catèter</th><th>Claus</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">CVC de curta durada</th><td>≤ 1 mes; més risc de trombosi</td></tr>
+        <tr><th scope="row">Port-a-cath</th><td>Totalment implantat; reservori subcutani fins a la cava superior; agulla de Huber; fins a ~5 anys</td></tr>
+        <tr><th scope="row">Hickman / Broviac</th><td>Tunelitzat, 1-3 llums; onco-hematologia</td></tr>
+        <tr><th scope="row">PICC</th><td>Inserció perifèrica (basílica, cefàlica); no per a grans volums</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Complicacions immediates:</strong> pneumotòrax, arrítmies, punció arterial, embolisme aeri. <strong>Tardanes:</strong> infecció, trombosi, obstrucció, migració, extravasació.</p>
+  </article>
+
+  <article class="tema" id="s5-6">
+    <h3><span>5.6</span> Nutrició i efectes adversos</h3>
+    <p>Dieta hiperproteica i hipercalòrica: 25-30 kcal/kg/dia i &gt; 1 g/kg/dia de proteïnes; àpats petits i freqüents. Evitar crus, cítrics (mucositis) i làctics no pasteuritzats.</p>
+    <div class="taula"><table>
+      <thead><tr><th>Efecte</th><th>Consells</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Nàusees i vòmits</th><td>Àpats freds i petits, sense olors fortes; ondansetró, metoclopramida</td></tr>
+        <tr><th scope="row">Mucositis</th><td>Raspall suau, col·lutoris sense alcohol, bicarbonat; lidocaïna viscosa 2% abans de menjar</td></tr>
+        <tr><th scope="row">Diarrea</th><td>Hidratació, poca fibra, sense làctics</td></tr>
+        <tr><th scope="row">Eritrodisestèsia</th><td>Aigua freda i hidratació de mans i peus</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s5-7">
+    <h3><span>5.7</span> Urgències oncològiques</h3>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Síndrome de la vena cava superior</th><th>Compressió medul·lar</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Causa</th><td>Tumors intratoràcics (pulmó, limfoma), trombosi</td><td>Metàstasis vertebrals</td></tr>
+        <tr><th scope="row">Clínica</th><td>Edema en esclavina, ingurgitació jugular, dispnea</td><td>Dolor d'esquena nocturn, debilitat, parestèsies, alteració d'esfínters</td></tr>
+        <tr><th scope="row">Tractament</th><td>Stent endovascular, RT o QT</td><td>Dexametasona urgent + RM &lt; 24 h, cirurgia i/o RT</td></tr>
+      </tbody>
+    </table></div>
+    <div class="taula"><table>
+      <thead><tr><th>Pancitopènia: cèl·lula baixa</th><th>Risc</th><th>Cures</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hematies</th><td>Fatiga, caigudes</td><td>Ajudar a mobilitzar-se</td></tr>
+        <tr><th scope="row">Neutròfils</th><td>Infecció</td><td>Higiene estricta, sense plantes ni mascotes</td></tr>
+        <tr><th scope="row">Plaquetes</th><td>Sagnat</td><td>Minimitzar puncions; evitar antiagregants i anticoagulants</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s5-8">
+    <h3><span>5.8</span> Estadificació (TNM)</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Lletra</th><th>Avalua</th><th>Escala</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">T</th><td>Tumor primari</td><td>TX · T0 · Tis (in situ) · T1-T4</td></tr>
+        <tr><th scope="row">N</th><td>Ganglis regionals</td><td>NX · N0 · N1-N3</td></tr>
+        <tr><th scope="row">M</th><td>Metàstasi a distància</td><td>MX · M0 · M1</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>Grau = agressivitat cel·lular (G1 ben diferenciat → G4 indiferenciat). Estadi = extensió (0 in situ → IV metàstasi). La biòpsia confirma el diagnòstic; els marcadors tumorals serveixen per al seguiment.</p></div>
+  </article>
+
+  <article class="tema" id="s5-9">
+    <h3><span>5.9</span> Casos clínics (Henderson)</h3>
+    <div class="taula"><table>
+      <thead><tr><th>Cas</th><th>Intervencions clau</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Mastectomia</th><td>Analgèsia pautada (EVA abans i 30 min després); drenatge per sota de la ferida; escolta activa; vestir primer el braç afectat</td></tr>
+        <tr><th scope="row">Colostomia</th><td>Pell periestomal neta i seca; tall de la placa a 0-2 mm; estoma sa rosa-vermell humit; acceptació progressiva</td></tr>
+        <tr><th scope="row">Pulmó en QT</th><td>Antiemètics, àpats petits i freds, lidocaïna viscosa abans de menjar, control de pes, teach-back</td></tr>
+        <tr><th scope="row">Pròstata amb metàstasis</th><td>Valoració del dolor, prevenció de caigudes, suport a la cuidadora (Zarit); alerta de compressió medul·lar</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+</section>
+
+<!-- ====== BLOC 6 ====== -->
+<section class="bloc" id="b6" data-bloc="6" data-nom="Genètica">
+  <h2><span class="bloc-n">6</span> Genètica</h2>
+
+  <article class="tema" id="s6-1">
+    <h3><span>6.1</span> Conceptes</h3>
+    <ul>
+      <li>Gen: unitat de l'herència; ocupa un locus. Al·lel: versió d'un gen (comú &gt; 50% o variant). Bases: A, G, C, T (U a l'ARN).</li>
+      <li>Transcripció (nucli): ADN → ARNm. Traducció (citoplasma, ribosoma): codons (3 bases = 1 aminoàcid) fins al codó de parada.</li>
+      <li>Mutació: cromosòmica (nombre), regional (part d'un cromosoma) o gènica (fins a ~100 kb).</li>
+      <li>Polimorfisme: variant &gt; 1% dels al·lels sense efecte advers. SNP (els més freqüents) · indels / STR (empremta d'ADN) · CNV.</li>
+    </ul>
+  </article>
+
+  <article class="tema" id="s6-2">
+    <h3><span>6.2</span> Anomalies cromosòmiques</h3>
+    <p>Incidència ~1/700 nadons; les numèriques (trisomies) són les més freqüents. Origen: no-disjunció en meiosi; si és en mitosi → mosaicisme. Estructurals: deleció, duplicació, inversió, translocació, inserció, anell. Detecció: cariotip, FISH, microarray, PCR.</p>
+    <div class="taula"><table>
+      <thead><tr><th>Síndrome</th><th>Alteració</th><th>Clau</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Down</th><td>Trisomia 21</td><td>Discapacitat intel·lectual, cardiopaties, hipotonia</td></tr>
+        <tr><th scope="row">Edwards</th><td>Trisomia 18</td><td>Mortalitat molt alta</td></tr>
+        <tr><th scope="row">Patau</th><td>Trisomia 13</td><td></td></tr>
+        <tr><th scope="row">Turner</th><td>45,X (dona)</td><td>Baixa estatura, infertilitat</td></tr>
+        <tr><th scope="row">Klinefelter</th><td>47,XXY (home)</td><td>Alt, ↓ testosterona, infertilitat</td></tr>
+        <tr><th scope="row">Miol del gat</th><td>Deleció del cromosoma 5</td><td>Plor característic</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="tema" id="s6-3">
+    <h3><span>6.3</span> Genètica del càncer</h3>
+    <div class="nota clau"><p class="nota-tit">Clau d'examen</p>
+      <p>El càncer és genètic però no sempre hereditari: s'hereta la predisposició, no el càncer.</p></div>
+    <div class="taula"><table>
+      <thead><tr><th></th><th>Mutació germinal</th><th>Mutació somàtica</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">On</th><td>Òvuls o espermatozoides</td><td>Cèl·lules del cos</td></tr>
+        <tr><th scope="row">Es transmet?</th><td>Sí</td><td>No</td></tr>
+      </tbody>
+    </table></div>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>Oncogen = accelerador enganxat · gen supressor = fre trencat · gen reparador = mecànic.</p></div>
+    <p><strong>Sospita d'herència:</strong> diversos familiars, edat jove, tumors múltiples o bilaterals, càncer de mama en home.</p>
+  </article>
+
+  <article class="tema" id="s6-4">
+    <h3><span>6.4</span> Assessorament genètic i edició genètica</h3>
+    <ul>
+      <li>Es fa abans i després de la prova; pedigrí de 3-4 generacions; decisió informada i no directiva.</li>
+      <li>Ètica: confidencialitat, dret a no saber, consentiment, deure no absolut d'informar familiars, prudència amb menors.</li>
+      <li>Rol infermer: recollir antecedents, educar, suport emocional, coordinar el seguiment.</li>
+      <li>CRISPR-Cas: talla l'ADN en un punt concret. Edició somàtica no es transmet; germinal sí (controls estrictes). Riscos: efectes off-target, desigualtat, ús no terapèutic.</li>
+    </ul>
+    <div class="nota mnemo"><p class="nota-tit">Mnemotècnia</p>
+      <p>Fases de la mitosi: PMAT (Profase, Metafase, Anafase, Telofase).</p></div>
+  </article>
+</section>
+
+<!-- ====== ANNEX ====== -->
+<section class="bloc annex" id="b7" data-bloc="7" data-nom="Annex: errors">
+  <h2><span class="bloc-n">A</span> Errors detectats als apunts originals</h2>
+  <article class="tema" id="s7-1">
+    <h3><span>A</span> Què diuen els apunts i què sembla correcte</h3>
+    <div class="nota revisa"><p class="nota-tit">Revisa</p>
+      <p>Si a l'examen surt una d'aquestes dades, contrasta-la amb el professorat: els apunts originals la donen d'una altra manera.</p></div>
+    <div class="taula"><table>
+      <thead><tr><th>Bloc</th><th>Què diuen els apunts</th><th>Què sembla correcte</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Vascular</th><td>TVP greu → «edema pulmonar»</td><td>Embolisme pulmonar (TEP)</td></tr>
+        <tr><th scope="row">Vascular</th><td>ITB = TAS braquial / TAS turmell</td><td>TAS turmell / TAS braquial</td></tr>
+        <tr><th scope="row">Vascular</th><td>Tromboangiïtis: dones de 20-40 anys</td><td>Clàssicament homes joves fumadors</td></tr>
+        <tr><th scope="row">Hematologia</th><td>Hb en g/L (14-16, 12-13)</td><td>Unitat g/dL</td></tr>
+        <tr><th scope="row">Hematologia</th><td>Rh+ té «antigen anti-D»</td><td>Antigen D</td></tr>
+        <tr><th scope="row">Hematologia</th><td>INR amb l'ATTP</td><td>INR amb el TP</td></tr>
+        <tr><th scope="row">Hematologia</th><td>Llistes de factors de l'INR barrejades</td><td>Antibiòtics i antifúngics pugen l'INR; anticonvulsius i rifampicina el baixen</td></tr>
+        <tr><th scope="row">Hematologia</th><td>Ordre de tubs: groc/vermell → blau</td><td>CLSI: blau abans que els de sèrum (segueix el protocol del centre)</td></tr>
+        <tr><th scope="row">Hematologia</th><td>Fibrinogen → protrombina</td><td>Protrombina → trombina; fibrinogen → fibrina</td></tr>
+        <tr><th scope="row">Hematologia</th><td>TPH: el donant rep el condicionament</td><td>El rep el receptor</td></tr>
+        <tr><th scope="row">Oncologia</th><td>Mamografia «de 45 a 50 anys»</td><td>50-69 anys a Catalunya</td></tr>
+        <tr><th scope="row">Oncologia</th><td>Neutropènia greu &lt; 1.000</td><td>Moltes escales: greu &lt; 500</td></tr>
+        <tr><th scope="row">Oncologia</th><td>Cures de la «limfopènia»: «enviar» antiagregants</td><td>Trombocitopènia: evitar antiagregants</td></tr>
+        <tr><th scope="row">Oncologia</th><td>Hickman de llarga durada però «màxim 6 mesos»</td><td>Dada contradictòria</td></tr>
+      </tbody>
+    </table></div>
+    <p class="font">Fonts de verificació dels cribratges (novembre de 2026): 3Cat (cribratges a Catalunya), ASPB (Programa de detecció precoç del càncer de mama 2024) i 3Cat (ampliació del cribratge colorectal). Imatges: apunts originals de l'assignatura.</p>
+  </article>
+</section>
+
+    </div><!-- /.text -->
+  </div><!-- /.apunts -->
+</section>
+
+<!-- ============ TARGETES ============ -->
+<section class="vista" id="v-targetes" data-vista="targetes" hidden>
+  <div class="vista-cap">
+    <h1>Targetes</h1>
+    <p>Llegeix la pregunta, pensa la resposta i gira la targeta. Marca si la sabies: les que no, tornen a sortir.</p>
+  </div>
+  <div class="eina-filtres" role="group" aria-label="Bloc de les targetes" id="tg-blocs"></div>
+  <div class="tg-zona">
+    <div class="tg-estat"><span id="tg-pos">1 / 1</span><span id="tg-sabudes"></span></div>
+    <button type="button" class="targeta" id="targeta" aria-live="polite">
+      <span class="targeta-cara targeta-davant"><small id="tg-bloc"></small><span id="tg-preg"></span><em>Toca o prem espai per girar</em></span>
+      <span class="targeta-cara targeta-darrere"><small>Resposta</small><span id="tg-resp"></span></span>
+    </button>
+    <div class="tg-botons">
+      <button type="button" class="boto boto-sec" id="tg-ant" aria-label="Targeta anterior">Anterior</button>
+      <button type="button" class="boto boto-no" id="tg-no">Encara no</button>
+      <button type="button" class="boto boto-si" id="tg-si">La sabia</button>
+      <button type="button" class="boto boto-sec" id="tg-seg" aria-label="Targeta següent">Següent</button>
+    </div>
+    <p class="tg-teclat">Teclat: espai gira · ← → canvia · S la sabia · N encara no</p>
+    <button type="button" class="enllac" id="tg-barreja">Barreja les targetes</button>
+  </div>
+</section>
+
+<!-- ============ TEST ============ -->
+<section class="vista" id="v-test" data-vista="test" hidden>
+  <div class="vista-cap">
+    <h1>Test d'autoavaluació</h1>
+    <p>Preguntes tipus examen amb l'explicació de cada resposta. Tria un bloc o fes-les totes.</p>
+  </div>
+  <div class="eina-filtres" role="group" aria-label="Bloc del test" id="ts-blocs"></div>
+  <div class="ts-zona" id="ts-zona" aria-live="polite"></div>
+</section>
+
+<!-- ============ EINES ============ -->
+<section class="vista" id="v-eines" data-vista="eines" hidden>
+  <div class="vista-cap">
+    <h1>Eines</h1>
+    <p>Tres taules dels apunts convertides en calculadores per practicar casos.</p>
+  </div>
+
+  <div class="eines">
+    <section class="eina" id="eina-sang">
+      <h2>Compatibilitat d'hematies</h2>
+      <p class="eina-desc">Tria el grup del receptor. S'encenen els donants dels quals pot rebre hematies.</p>
+      <div class="sang-mode" role="group" aria-label="Mode">
+        <button type="button" class="xip" data-mode="receptor" aria-pressed="true">Soc receptor</button>
+        <button type="button" class="xip" data-mode="donant" aria-pressed="false">Soc donant</button>
+      </div>
+      <div class="sang-grups" id="sang-tria" role="group" aria-label="Grup sanguini"></div>
+      <div class="sang-res">
+        <p class="sang-res-tit" id="sang-res-tit"></p>
+        <div class="sang-grups sang-bosses" id="sang-res"></div>
+        <p class="sang-exp" id="sang-exp"></p>
+      </div>
+    </section>
+
+    <section class="eina" id="eina-itb">
+      <h2>Índex turmell-braç</h2>
+      <p class="eina-desc">ITB = TAS turmell / TAS braquial. Escriu les dues pressions sistòliques.</p>
+      <div class="camps">
+        <label>TAS turmell <span class="unitat"><input type="number" id="itb-t" inputmode="numeric" min="0" max="300" value="110"> mmHg</span></label>
+        <label>TAS braquial <span class="unitat"><input type="number" id="itb-b" inputmode="numeric" min="1" max="300" value="130"> mmHg</span></label>
+      </div>
+      <p class="res-gran"><output id="itb-val">0,85</output></p>
+      <div class="escala" aria-hidden="true">
+        <div class="escala-trams">
+          <i style="flex:4"></i><i style="flex:4"></i><i style="flex:2"></i><i style="flex:4"></i>
+        </div>
+        <div class="escala-marca" id="itb-marca"></div>
+        <div class="escala-num"><span style="left:0">0</span><span style="left:28.57%">0,4</span><span style="left:57.14%">0,8</span><span style="left:71.43%">1</span><span style="left:100%">1,4</span></div>
+      </div>
+      <p class="res-text" id="itb-text"></p>
+    </section>
+
+    <section class="eina" id="eina-inr">
+      <h2>INR en un pacient amb Sintrom</h2>
+      <p class="eina-desc">Objectiu terapèutic amb AVK: 2-3. Escriu el valor de l'analítica.</p>
+      <div class="camps">
+        <label>INR <span class="unitat"><input type="number" id="inr-v" inputmode="decimal" min="0.5" max="10" step="0.1" value="3.6"></span></label>
+      </div>
+      <div class="escala" aria-hidden="true">
+        <div class="escala-trams inr-trams"><i style="flex:1"></i><i style="flex:1"></i><i style="flex:2"></i></div>
+        <div class="escala-marca" id="inr-marca"></div>
+        <div class="escala-num"><span style="left:0">1</span><span style="left:25%">2</span><span style="left:50%">3</span><span style="left:100%">5</span></div>
+      </div>
+      <p class="res-text" id="inr-text"></p>
+      <div class="inr-factors" id="inr-factors"></div>
+    </section>
+  </div>
+</section>
+
+</main>
+
+<footer class="peu">
+  <p>Apunts d'estudi sintetitzats per a l'examen de Cures Infermeres en Alteracions de la Salut II. Material de repàs: no substitueix els apunts de l'assignatura ni el criteri del professorat.</p>
+</footer>
+
+<dialog class="visor" id="visor">
+  <button type="button" class="visor-tanca" id="visor-tanca" aria-label="Tanca la imatge">✕</button>
+  <img id="visor-img" alt="">
+  <p id="visor-peu"></p>
+</dialog>
+
+<script src="dades.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
