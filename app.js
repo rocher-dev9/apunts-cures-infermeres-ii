@@ -193,18 +193,37 @@
   primer.classList.add('obert');
   $('button', primer).setAttribute('aria-expanded', 'true');
 
-  // Índex al mòbil: calaix inferior
+  // Índex al mòbil: calaix inferior amb fons
   const index = $('.index');
+  const fons = Object.assign(document.createElement('div'), { className: 'index-fons' });
   const botoIndex = Object.assign(document.createElement('button'), { type: 'button', className: 'boto-index', textContent: 'Índex' });
   botoIndex.setAttribute('aria-expanded', 'false');
-  botoIndex.addEventListener('click', () => {
-    const obert = index.classList.toggle('obert');
-    botoIndex.setAttribute('aria-expanded', String(obert));
-    botoIndex.textContent = obert ? 'Tanca' : 'Índex';
-  });
-  $('#v-apunts').append(botoIndex);
+  function calaix(obrir) {
+    index.classList.toggle('obert', obrir);
+    fons.classList.toggle('obert', obrir);
+    document.body.classList.toggle('calaix-obert', obrir);
+    botoIndex.setAttribute('aria-expanded', String(obrir));
+    botoIndex.textContent = obrir ? 'Tanca' : 'Índex';
+  }
+  botoIndex.addEventListener('click', () => calaix(!index.classList.contains('obert')));
+  fons.addEventListener('click', () => calaix(false));
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && index.classList.contains('obert')) calaix(false); });
+  // Si la finestra s'eixampla fins a mostrar l'índex lateral, tanca el calaix
+  matchMedia('(min-width: 901px)').addEventListener('change', (e) => { if (e.matches) calaix(false); });
+  $('#v-apunts').append(fons, botoIndex);
   llistaIndex.addEventListener('click', (ev) => {
-    if (ev.target.closest('a') && index.classList.contains('obert')) botoIndex.click();
+    if (ev.target.closest('a') && index.classList.contains('obert')) calaix(false);
+  });
+
+  // Taules: etiqueta de columna a cada cel·la, perquè al mòbil es llegeixin com a fitxes
+  $$('.taula table').forEach(taula => {
+    const caps = $$('thead th', taula).map(th => th.textContent.trim());
+    if (caps.length >= 3) taula.parentElement.classList.add('apila');
+    $$('tbody tr', taula).forEach(tr => {
+      [...tr.children].forEach((cel, i) => {
+        if (cel.tagName === 'TD') cel.dataset.label = caps[i] || '';
+      });
+    });
   });
 
   /* ---------------- Filtres i cerca ---------------- */
