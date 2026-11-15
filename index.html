@@ -830,8 +830,9 @@
 <section class="vista" id="v-test" data-vista="test" hidden>
   <div class="vista-cap">
     <h1>Test d'autoavaluació</h1>
-    <p>Preguntes tipus examen amb l'explicació de cada resposta. Tria un bloc o fes-les totes.</p>
+    <p>Rondes de 10 preguntes que avancen pel temari. Les que encertes no tornen a sortir. Les que falles tornen en rondes següents fins que les encertis dues vegades.</p>
   </div>
+  <div class="ts-panell" id="ts-panell" aria-live="polite"><!-- generat amb JS --></div>
   <div class="eina-filtres" role="group" aria-label="Bloc del test" id="ts-blocs"></div>
   <div class="ts-zona" id="ts-zona" aria-live="polite"></div>
 </section>
@@ -907,6 +908,7 @@
 </dialog>
 
 <script src="dades.js"></script>
+<script src="preguntes.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

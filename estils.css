@@ -557,8 +557,101 @@ body[data-filtre] .tema { padding: 22px 0 10px; }
 .ts-final p { margin: 8px auto; max-width: 46ch; color: var(--ink-soft); }
 .ts-errades { text-align: left; margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .ts-errades li { padding: 12px 16px; border-left: 4px solid var(--ko); background: var(--paper); border-radius: 0 var(--r-s) var(--r-s) 0; font-size: .95rem; }
-.ts-errades li span { display: block; color: var(--ok); font-weight: 700; margin-top: 4px; }
 .ts-final .boto { margin-top: 20px; }
+.ts-final h3 { font-size: 1.15rem; text-align: left; margin: 26px 0 0; }
+.ts-errades .te-preg { margin: 0; color: var(--ink); max-width: none; }
+.ts-errades .te-resp { margin: 4px 0; color: var(--ok); max-width: none; }
+.ts-errades a { font-size: .88rem; font-weight: 700; }
+
+/* Panell de preparació */
+.ts-panell { max-width: var(--ample); margin: 0 auto; padding: 0 16px 20px; }
+.ts-prep {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) auto minmax(0, 1fr); gap: 28px; align-items: center;
+  padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-l);
+}
+.ts-prep p { margin: 0; }
+.ts-prep-tit { font-weight: 700; font-size: .9rem; color: var(--ink-soft); }
+.ts-prep-num { margin: 2px 0 10px !important; }
+.ts-prep-num b { font-family: var(--font-tit); font-size: 2.4rem; line-height: 1; color: var(--teal); margin-right: 4px; }
+.ts-barra {
+  display: flex; height: 8px; border-radius: 99px; overflow: hidden;
+  background: var(--line);
+}
+.ts-barra i { display: block; height: 100%; transition: width .4s ease; }
+.ts-barra .d { background: var(--teal); }
+.ts-barra .r { background: var(--clau); }
+.ts-barra-gran { height: 12px; }
+.ts-prep-estat { margin-top: 12px !important; font-size: .95rem; color: var(--ink-soft); max-width: 52ch; }
+.ts-prep-estat b { color: var(--ink); }
+.ts-prep-estat.llest b { color: var(--ok); }
+.ts-comptes { display: grid; gap: 8px; margin: 0; }
+.ts-comptes > div { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding-left: 12px; border-left: 4px solid; }
+.ts-comptes dt { font-size: .9rem; color: var(--ink-soft); }
+.ts-comptes dd { margin: 0; font-family: var(--font-tit); font-weight: 800; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.ts-comptes .c-dom { border-color: var(--teal); }
+.ts-comptes .c-rep { border-color: var(--clau); }
+.ts-comptes .c-nov { border-color: var(--line-strong); }
+.ts-blocs-prog { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.ts-blocs-prog li { display: grid; grid-template-columns: 7.5em minmax(0, 1fr) 3.2em; align-items: center; gap: 10px; font-size: .85rem; }
+.tb-nom { font-weight: 700; color: var(--ink-soft); }
+.tb-n { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Inici de ronda */
+.ts-inici { padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-l); }
+.ts-inici h2 { font-size: 1.6rem; font-weight: 800; }
+.ts-inici p { margin: 10px 0 20px; color: var(--ink-soft); max-width: 60ch; }
+.ts-inici .tg-botons { justify-content: flex-start; }
+.ts-reset { text-align: center; margin: 16px 0 0; }
+.ts-reset .enllac { color: var(--muted); font-weight: 400; font-size: .88rem; }
+.ts-reset .enllac[data-accio="reset-ok"] { color: var(--ko); font-weight: 700; }
+
+/* Pregunta */
+.ts-preg-cap { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ts-etiq { font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: var(--paper); border: 1px solid var(--line); color: var(--ink-soft); }
+.ts-etiq.e-repas { background: var(--clau-bg); border-color: var(--clau); color: var(--clau-ink); }
+.ts-etiq.e-torna { background: var(--alerta-bg); border-color: var(--alerta); color: var(--alerta); }
+.ts-etiq.e-dom { background: var(--teal-soft); border-color: var(--teal); color: var(--teal-ink); }
+.ts-exp.ok { background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
+.ts-exp .ts-estat { display: block; margin-top: 6px; font-size: .9rem; font-weight: 700; color: var(--ok); }
+
+/* Error: resposta correcta i fragment dels apunts */
+.ts-repas {
+  margin-top: 18px; padding: 18px 20px; border-radius: var(--r-m);
+  background: var(--alerta-bg); border-left: 5px solid var(--alerta);
+}
+.ts-repas p { margin: 0; }
+.ts-repas-tit { font-size: .85rem; font-weight: 700; color: var(--alerta); }
+.ts-correcta { font-family: var(--font-tit); font-weight: 700; font-size: 1.2rem; margin: 2px 0 8px !important; color: var(--ink); }
+.ts-exp-text { color: var(--ink); }
+.ts-cita {
+  margin-top: 14px; padding: 14px 16px; border-radius: var(--r-s);
+  background: var(--surface); border: 1px solid var(--line);
+  font-size: .95rem;
+}
+.ts-cita-font { font-size: .82rem; font-weight: 700; color: var(--teal); margin-bottom: 8px !important; }
+.ts-cita .nota { margin: 0; }
+.ts-cita ul { margin: 0; padding-left: 1.2em; }
+.ts-cita ul li::marker { color: var(--teal); }
+.cita-fila p { margin: 0 0 4px; }
+.cita-fila p:last-child { margin-bottom: 0; }
+.cita-fila b { color: var(--ink-soft); font-size: .88rem; margin-right: 4px; }
+.cita-fila-tit { font-family: var(--font-tit); font-weight: 700; font-size: 1.02rem; color: var(--ink); margin-bottom: 6px !important; }
+.abcde-sol, .taps-sol { display: block; max-width: 260px; margin: 0; }
+.ts-repas-peu { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-top: 14px !important; }
+.ts-obre { font-weight: 700; }
+.ts-repas .ts-estat { font-size: .9rem; color: var(--ink-soft); }
+
+@media (max-width: 900px) {
+  .ts-prep { grid-template-columns: 1fr auto; }
+  .ts-blocs-prog { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .ts-prep { grid-template-columns: 1fr; gap: 18px; padding: 18px; }
+  .ts-comptes { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .ts-comptes > div { flex-direction: column; gap: 0; }
+  .ts-inici { padding: 20px; }
+  .ts-repas { padding: 16px; }
+}
 
 /* Eines */
 .eines { max-width: var(--ample); margin: 0 auto; padding: 0 16px 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; align-items: start; }

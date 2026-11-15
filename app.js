@@ -413,43 +413,200 @@
     return { inicia };
   })();
 
-  /* ---------------- Test ---------------- */
+  /* ---------------- Test: rondes sense repetició ----------------
+     Cada pregunta té un estat desat al navegador:
+     · nova: encara no ha sortit
+     · repas: l'has fallada; torna en rondes següents fins que l'encertis 2 vegades seguides
+     · dom: dominada; no torna a sortir (només als simulacres)
+     Les rondes agafen primer les de repàs i després les noves, en l'ordre dels apunts. */
   const Test = (() => {
-    const zona = $('#ts-zona');
-    let preguntes = [];
-    let i = 0;
-    let encerts = 0;
-    let errades = [];
-    let bloc = 'tots';
-    let iniciat = false;
+    const RONDA = 10;
+    const MAX_REPAS = 4;
+    const SIMULACRE = 30;
     const lletres = ['A', 'B', 'C', 'D'];
+    const zona = $('#ts-zona');
+    const panell = $('#ts-panell');
+    const esc = (s) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const hash = (s) => { let h = 5381; for (const c of s) h = ((h << 5) + h + c.codePointAt(0)) >>> 0; return h.toString(36); };
 
-    function comenca(llista) {
-      const base = llista || (bloc === 'tots' ? window.PREGUNTES : window.PREGUNTES.filter(p => String(p.b) === bloc));
-      // Barreja preguntes i opcions
-      preguntes = barreja(base).map(p => {
-        const ordre = barreja(p.o.map((txt, k) => ({ txt, ok: k === p.c })));
-        return { ...p, ops: ordre };
-      });
-      i = 0; encerts = 0; errades = [];
-      pinta();
+    // Banc ordenat com els apunts (estable dins de cada tema)
+    const ordre = temes.map(t => t.id);
+    const banc = window.PREGUNTES
+      .map(([t, k, p, o, e]) => ({ id: hash(p), t, k, p, o, e, b: Number(t[1]) }))
+      .sort((a, b) => ordre.indexOf(a.t) - ordre.indexOf(b.t));
+
+    let estat = llegeix('cias-test', {});
+    let numRonda = llegeix('cias-test-ronda', 0);
+    let bloc = 'tots';
+    let ronda = null;
+    let iniciat = false;
+
+    const desaEstat = () => { desa('cias-test', estat); desa('cias-test-ronda', numRonda); };
+    const situacio = (q) => (estat[q.id] && estat[q.id].e) || 'nova';
+    const delBloc = () => bloc === 'tots' ? banc : banc.filter(q => String(q.b) === bloc);
+
+    function infoTema(id) {
+      const h3 = $('#' + id + ' h3');
+      if (!h3) return '';
+      const n = $('span', h3).textContent;
+      const nom = [...h3.childNodes].filter(nd => nd.nodeType === 3).map(nd => nd.textContent).join('').trim();
+      return `${n} ${nom}`;
     }
 
-    function pinta() {
-      const p = preguntes[i];
+    /* Fragment literal dels apunts on surt la resposta */
+    function cita(q) {
+      const tema = document.getElementById(q.t);
+      if (!tema) return '';
+      const clau = norm(q.k);
+      const cands = $$('td, th, li, p, .nota, .tap, .abcde > div', tema)
+        .filter(el => !el.closest('.tema-peu, figure, h3, thead') && norm(el.textContent).includes(clau));
+      if (!cands.length) return '';
+      const el = cands.reduce((a, b) => (b.textContent.length < a.textContent.length ? b : a));
+
+      if (el.matches('td, th')) {
+        const tr = el.closest('tr');
+        const titol = tr.querySelector('th[scope="row"]');
+        if (titol) {
+          const cel = [...tr.children].filter(c => c.tagName === 'TD' && c.textContent.trim());
+          return `<div class="cita-fila"><p class="cita-fila-tit">${esc(titol.textContent)}</p>` +
+            cel.map(c => `<p>${c.dataset.label ? `<b>${esc(c.dataset.label)}</b> ` : ''}${c.innerHTML}</p>`).join('') + '</div>';
+        }
+        return `<div class="cita-fila"><p>${el.dataset.label ? `<b>${esc(el.dataset.label)}</b> ` : ''}${el.innerHTML}</p></div>`;
+      }
+      if (el.matches('.abcde > div')) return `<div class="abcde abcde-sol">${el.outerHTML}</div>`;
+      if (el.matches('.tap')) return `<div class="taps taps-sol">${el.outerHTML}</div>`;
+      const peca = el.closest('.nota') || el;
+      const clon = peca.cloneNode(true);
+      clon.removeAttribute('id');
+      return clon.tagName === 'LI' ? `<ul>${clon.outerHTML}</ul>` : clon.outerHTML;
+    }
+
+    /* ---- Resum de preparació ---- */
+    function pintaPanell() {
+      const total = banc.length;
+      const dom = banc.filter(q => situacio(q) === 'dom').length;
+      const rep = banc.filter(q => situacio(q) === 'repas').length;
+      const nov = total - dom - rep;
+      const pct = Math.floor(dom / total * 100);
+      const falten = total - dom;
+      const [cls, tit, txt] =
+        dom === total ? ['llest', 'Temari dominat', 'Has encertat totes les preguntes de tots els temes. Fes simulacres per mantenir-ho fresc fins a l\'examen.']
+        : pct >= 80 ? ['a-prop', 'Molt a prop', `Et queden ${falten} preguntes. Prioritza les de repàs: són les que encara falles.`]
+        : pct >= 50 ? ['meitat', 'Més de la meitat', `Ja domines ${dom} de ${total}. Continua ronda a ronda fins a cobrir tots els temes.`]
+        : dom > 0 ? ['cami', 'En camí', `Domines ${dom} de ${total} preguntes. Cada ronda avança pel temari en l'ordre dels apunts.`]
+        : ['inici', 'Comença pel principi', `${total} preguntes que cobreixen els 37 temes. Quan les dominis totes, hauràs repassat tot el temari.`];
+
+      const files = Object.entries(window.BLOCS).map(([b, nom]) => {
+        const qs = banc.filter(q => String(q.b) === b);
+        const d = qs.filter(q => situacio(q) === 'dom').length;
+        const r = qs.filter(q => situacio(q) === 'repas').length;
+        return `<li><span class="tb-nom">${nom}</span>
+          <span class="ts-barra" role="img" aria-label="${d} dominades i ${r} per repassar de ${qs.length}">
+            <i class="d" style="width:${d / qs.length * 100}%"></i><i class="r" style="width:${r / qs.length * 100}%"></i>
+          </span><span class="tb-n">${d}/${qs.length}</span></li>`;
+      }).join('');
+
+      panell.innerHTML = `
+        <div class="ts-prep">
+          <div class="ts-prep-cap">
+            <p class="ts-prep-tit">Preparació per a l'examen</p>
+            <p class="ts-prep-num"><b>${pct}%</b> del temari dominat</p>
+            <span class="ts-barra ts-barra-gran" aria-hidden="true">
+              <i class="d" style="width:${dom / total * 100}%"></i><i class="r" style="width:${rep / total * 100}%"></i>
+            </span>
+            <p class="ts-prep-estat ${cls}"><b>${tit}.</b> ${txt}</p>
+          </div>
+          <dl class="ts-comptes">
+            <div class="c-dom"><dt>Dominades</dt><dd>${dom}</dd></div>
+            <div class="c-rep"><dt>Per repassar</dt><dd>${rep}</dd></div>
+            <div class="c-nov"><dt>Noves</dt><dd>${nov}</dd></div>
+          </dl>
+          <ul class="ts-blocs-prog">${files}</ul>
+        </div>`;
+    }
+
+    /* ---- Pantalla d'inici de ronda ---- */
+    function pintaInici() {
+      ronda = null;
+      const qs = delBloc();
+      const pendents = qs.filter(q => situacio(q) !== 'dom');
+      const doms = qs.length - pendents.length;
+      const nomBloc = bloc === 'tots' ? 'tot el temari' : window.BLOCS[bloc];
+      let html;
+      if (pendents.length) {
+        const rep = pendents.filter(q => situacio(q) === 'repas').length;
+        const n = Math.min(RONDA, pendents.length);
+        html = `<h2>Ronda ${numRonda + 1}</h2>
+          <p>${n} preguntes de ${esc(nomBloc)}. ${rep ? `Primer ${Math.min(rep, MAX_REPAS)} de les ${rep} que tens per repassar; després, ` : 'Surten '}les noves en l'ordre dels apunts.</p>
+          <div class="tg-botons"><button type="button" class="boto boto-pri" data-accio="ronda">Comença la ronda</button>
+          ${doms >= RONDA ? `<button type="button" class="boto boto-sec" data-accio="simulacre">Simulacre amb les dominades</button>` : ''}</div>`;
+      } else {
+        html = `<h2>${bloc === 'tots' ? 'Has dominat totes les preguntes' : `Has dominat ${esc(nomBloc)}`}</h2>
+          <p>No queda cap pregunta pendent${bloc === 'tots' ? '' : ' en aquest bloc'}. Un simulacre barreja ${Math.min(SIMULACRE, qs.length)} preguntes ja dominades: si en falles alguna, torna a la pila de repàs.</p>
+          <div class="tg-botons"><button type="button" class="boto boto-pri" data-accio="simulacre">Fes un simulacre</button></div>`;
+      }
+      zona.innerHTML = `<div class="ts-inici">${html}</div>
+        <p class="ts-reset"><button type="button" class="enllac" data-accio="reset">Esborra el progrés del test</button></p>`;
+    }
+
+    zona.addEventListener('click', (ev) => {
+      const b = ev.target.closest('[data-accio]');
+      if (!b) return;
+      const a = b.dataset.accio;
+      if (a === 'ronda') novaRonda();
+      else if (a === 'simulacre') simulacre();
+      else if (a === 'inici') { pintaInici(); zona.scrollIntoView({ block: 'nearest' }); }
+      else if (a === 'reset') {
+        b.textContent = 'Segur? Es perdran les preguntes dominades. Sí, esborra-ho';
+        b.dataset.accio = 'reset-ok';
+      } else if (a === 'reset-ok') {
+        estat = {}; numRonda = 0; desaEstat(); pintaPanell(); pintaInici();
+      }
+    });
+
+    /* ---- Rondes ---- */
+    function novaRonda() {
+      const qs = delBloc();
+      const repas = qs.filter(q => situacio(q) === 'repas').sort((a, b) => (estat[a.id].r || 0) - (estat[b.id].r || 0));
+      const noves = qs.filter(q => situacio(q) === 'nova');
+      let sel = repas.slice(0, MAX_REPAS);
+      sel = sel.concat(noves.slice(0, RONDA - sel.length));
+      if (sel.length < RONDA) sel = sel.concat(repas.slice(MAX_REPAS, MAX_REPAS + RONDA - sel.length));
+      numRonda++;
+      desaEstat();
+      comenca(barreja(sel), false);
+    }
+    function simulacre() {
+      const doms = delBloc().filter(q => situacio(q) === 'dom');
+      numRonda++;
+      desaEstat();
+      comenca(barreja(doms).slice(0, SIMULACRE), true);
+    }
+    const prepara = (q, reintent) => ({ q, reintent, ops: barreja(q.o.map((txt, k) => ({ txt, ok: k === 0 }))) });
+    function comenca(llista, simul) {
+      ronda = { llista: llista.map(q => prepara(q, false)), i: 0, encerts: 0, errades: [], noves: 0, simul };
+      pintaPregunta();
+    }
+
+    function pintaPregunta() {
+      const { llista, i, encerts } = ronda;
+      const item = llista[i];
+      const q = item.q;
+      const sit = situacio(q);
+      const etiq = item.reintent ? ['torna', 'Torna-hi'] : sit === 'repas' ? ['repas', 'Per repassar'] : sit === 'dom' ? ['dom', 'Dominada'] : ['nova', 'Nova'];
       zona.innerHTML = `
-        <div class="ts-prog"><span>Pregunta ${i + 1} de ${preguntes.length}</span>
-          <div class="barra-prog"><i style="width:${i / preguntes.length * 100}%"></i></div>
+        <div class="ts-prog"><span>${ronda.simul ? 'Simulacre' : 'Ronda ' + numRonda} · ${i + 1} de ${llista.length}</span>
+          <div class="barra-prog"><i style="width:${i / llista.length * 100}%"></i></div>
           <span>${encerts} encerts</span></div>
         <div class="ts-preg">
-          <small>${window.BLOCS[p.b]}</small>
+          <div class="ts-preg-cap"><small>${window.BLOCS[q.b]} · ${esc(infoTema(q.t))}</small><span class="ts-etiq e-${etiq[0]}">${etiq[1]}</span></div>
           <h2></h2>
           <div class="ts-ops"></div>
           <div class="ts-resultat"></div>
         </div>`;
-      $('h2', zona).textContent = p.p;
+      $('h2', zona).textContent = q.p;
       const ops = $('.ts-ops', zona);
-      p.ops.forEach((o, k) => {
+      item.ops.forEach((o, k) => {
         const b = document.createElement('button');
         b.type = 'button';
         b.className = 'ts-op';
@@ -460,67 +617,106 @@
       });
     }
 
-    function respon(k) {
-      const p = preguntes[i];
-      const botons = $$('.ts-op', zona);
-      botons.forEach((b, j) => {
-        b.disabled = true;
-        if (p.ops[j].ok) b.classList.add('ok');
-      });
-      const encert = p.ops[k].ok;
-      if (encert) encerts++;
-      else { botons[k].classList.add('ko'); errades.push(p); }
-      const res = $('.ts-resultat', zona);
-      res.innerHTML = `<div class="ts-exp"><b></b><span></span></div>
-        <div class="ts-seg"><button type="button" class="boto boto-pri"></button></div>`;
-      $('.ts-exp b', res).textContent = encert ? 'Correcte.' : 'No és aquesta.';
-      $('.ts-exp span', res).textContent = p.e;
-      const seg = $('.ts-seg button', res);
-      seg.textContent = i + 1 < preguntes.length ? 'Següent pregunta' : 'Mostra el resultat';
-      seg.addEventListener('click', () => { i++; i < preguntes.length ? pinta() : final(); });
-      seg.focus({ preventScroll: true });
+    function actualitza(q, encert) {
+      const s = estat[q.id] || { e: 'nova', ok: 0 };
+      const abans = s.e;
+      if (encert) {
+        if (s.e === 'nova') s.e = 'dom';
+        else if (s.e === 'repas') { s.ok = (s.ok || 0) + 1; if (s.ok >= 2) s.e = 'dom'; }
+      } else { s.e = 'repas'; s.ok = 0; }
+      s.r = numRonda;
+      estat[q.id] = s;
+      desaEstat();
+      return { abans, ara: s };
     }
 
-    function final() {
-      const pct = Math.round(encerts / preguntes.length * 100);
-      const missatge = pct >= 90 ? 'Ho tens per a l\'examen.'
-        : pct >= 70 ? 'Bona base. Repassa les errades i torna-ho a provar.'
-        : pct >= 50 ? 'Aprovat just. Torna als apunts dels temes que has fallat.'
-        : 'Encara cal repassar. Comença pels requadres de clau d\'examen.';
-      zona.innerHTML = `<div class="ts-final">
-          <p class="res-gran">${encerts} / ${preguntes.length}</p>
-          <p><strong>${pct}%</strong>. ${missatge}</p>
-          <ul class="ts-errades"></ul>
-          <div class="tg-botons"></div>
-        </div>`;
-      const ul = $('.ts-errades', zona);
-      errades.forEach(p => {
-        const li = document.createElement('li');
-        li.textContent = p.p;
-        const s = document.createElement('span');
-        s.textContent = p.o[p.c];
-        li.append(s);
-        ul.append(li);
-      });
-      const botons = $('.tg-botons', zona);
-      if (errades.length) {
-        const b = Object.assign(document.createElement('button'), { type: 'button', className: 'boto boto-pri', textContent: 'Repeteix les errades' });
-        const llista = errades.slice();
-        b.addEventListener('click', () => comenca(llista));
-        botons.append(b);
+    function respon(k) {
+      const item = ronda.llista[ronda.i];
+      const q = item.q;
+      const botons = $$('.ts-op', zona);
+      botons.forEach((b, j) => { b.disabled = true; if (item.ops[j].ok) b.classList.add('ok'); });
+      const encert = item.ops[k].ok;
+      if (!encert) botons[k].classList.add('ko');
+
+      let estatTxt;
+      if (item.reintent) {
+        estatTxt = encert ? 'Tornarà a sortir en una ronda següent per consolidar-la.' : 'Repassa el fragment dels apunts: tornarà a sortir a la propera ronda.';
+      } else {
+        const { abans, ara } = actualitza(q, encert);
+        if (encert) {
+          ronda.encerts++;
+          if (ara.e === 'dom' && abans !== 'dom') { ronda.noves++; estatTxt = 'Dominada: no tornarà a sortir.'; }
+          else if (ara.e === 'dom') estatTxt = 'Continua dominada.';
+          else estatTxt = 'Encerta-la una vegada més en una altra ronda i quedarà dominada.';
+        } else {
+          ronda.errades.push(q);
+          ronda.llista.push(prepara(q, true));
+          estatTxt = 'Tornarà a sortir al final d\'aquesta ronda i en les següents, fins que l\'encertis dues vegades.';
+        }
       }
-      const r = Object.assign(document.createElement('button'), { type: 'button', className: 'boto boto-sec', textContent: 'Torna a començar' });
-      r.addEventListener('click', () => comenca());
-      botons.append(r);
+
+      const res = $('.ts-resultat', zona);
+      const correcta = q.o[0];
+      if (encert) {
+        res.innerHTML = `<div class="ts-exp ok"><b>Correcte.</b> <span class="ts-exp-text"></span><span class="ts-estat"></span></div>`;
+        $('.ts-exp-text', res).textContent = q.e;
+        $('.ts-estat', res).textContent = estatTxt;
+      } else {
+        const fragment = cita(q);
+        res.innerHTML = `
+          <div class="ts-repas">
+            <p class="ts-repas-tit">Resposta correcta</p>
+            <p class="ts-correcta"></p>
+            <p class="ts-exp-text"></p>
+            ${fragment ? `<div class="ts-cita"><p class="ts-cita-font">Als apunts · ${esc(infoTema(q.t))}</p>${fragment}</div>` : ''}
+            <p class="ts-repas-peu"><a class="ts-obre" href="#${q.t}">Obre el tema als apunts</a><span class="ts-estat"></span></p>
+          </div>`;
+        $('.ts-correcta', res).textContent = correcta;
+        $('.ts-exp-text', res).textContent = q.e;
+        $('.ts-estat', res).textContent = estatTxt;
+      }
+      const darrera = ronda.i + 1 >= ronda.llista.length;
+      res.insertAdjacentHTML('beforeend', `<div class="ts-seg"><button type="button" class="boto boto-pri">${darrera ? 'Acaba la ronda' : 'Següent pregunta'}</button></div>`);
+      const seg = $('.ts-seg button', res);
+      seg.addEventListener('click', () => {
+        ronda.i++;
+        if (ronda.i < ronda.llista.length) pintaPregunta(); else finalRonda();
+        zona.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+      seg.focus({ preventScroll: true });
+      pintaPanell();
+    }
+
+    function finalRonda() {
+      const n = ronda.llista.filter(x => !x.reintent).length;
+      const pct = Math.round(ronda.encerts / n * 100);
+      const missatge = pct === 100 ? 'Ronda perfecta.'
+        : pct >= 70 ? 'Bona ronda. Les errades tornaran a sortir fins que les dominis.'
+        : 'Llegeix els fragments dels apunts de les errades abans de la ronda següent.';
+      const errades = ronda.errades.map(q => `
+        <li><p class="te-preg">${esc(q.p)}</p>
+          <p class="te-resp"><b>Correcta:</b> ${esc(q.o[0])}</p>
+          <a href="#${q.t}">${esc(infoTema(q.t))}</a></li>`).join('');
+      zona.innerHTML = `<div class="ts-final">
+          <p class="res-gran">${ronda.encerts} / ${n}</p>
+          <p><strong>${ronda.simul ? 'Simulacre acabat' : 'Ronda ' + numRonda + ' acabada'}.</strong> ${missatge}
+            ${ronda.noves ? `Has dominat ${ronda.noves} ${ronda.noves === 1 ? 'pregunta nova' : 'preguntes noves'}.` : ''}</p>
+          ${errades ? `<h3>Per repassar</h3><ul class="ts-errades">${errades}</ul>` : ''}
+          <div class="tg-botons">
+            <button type="button" class="boto boto-pri" data-accio="inici">Continua</button>
+          </div>
+        </div>`;
+      pintaPanell();
     }
 
     function inicia() {
       if (iniciat) return;
       iniciat = true;
-      creaXips($('#ts-blocs'), 'Totes', (k) => { bloc = k; comenca(); });
-      comenca();
+      creaXips($('#ts-blocs'), 'Tot el temari', (k) => { bloc = k; pintaInici(); });
+      pintaPanell();
+      pintaInici();
     }
-    return { inicia };
+    return { inicia, banc, cita };
   })();
 
   /* ---------------- Eina: compatibilitat d'hematies ---------------- */
